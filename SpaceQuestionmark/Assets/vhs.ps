@@ -1,0 +1,74 @@
+﻿#version 120
+uniform sampler2D texture;
+
+uniform float time;
+
+
+uniform float CRTBulgeMagnitude = 1.0; 
+uniform float CRTDistortionSize = 0.3;
+
+vec2 CalculateCRTDistortion(vec2 uvCoordinate)
+{
+	// CRT-Bulge is an easy effect to produce:
+	// We simply find the centre point on the texture, and push the UV coordinates outwards from that point, along a vector pointing away from the center.
+	// We can subsequently use the resultant UV coordinates to sample and it will give a bulging or bent appearance.
+	// We can control the amount of distortion by multiplying the vector by some values; in this case, CRTDistortionSize and CRTBulgeMagnitude.
+
+    vec2 centrePoint = uvCoordinate - vec2(0.5); // This is a vector to the center, which will always be 0.5,0.5 in relative coordinates.
+    float distortionAmount = dot(centrePoint, centrePoint) * CRTDistortionSize;
+    return uvCoordinate + centrePoint * (1.0 - distortionAmount) * distortionAmount * CRTBulgeMagnitude;
+}
+
+void main() {
+    vec2 pos = gl_TexCoord[0].xy;
+	vec2 wavepos = pos;
+	//wavepos.x += 0.01 * sin(time * 0.03f + wavepos.y * 5000.0f);
+	
+	// Wobble
+	//wavepos.x += 0.001 * sin(time*0.9f + wavepos.y * 12.0f);
+
+	// Bulge
+	wavepos = CalculateCRTDistortion(pos);
+
+
+	vec4 pixel = texture2D(texture, wavepos);
+
+    float moduloResult = mod(floor((wavepos.x*640)/1.0f), 3.0);
+    
+   	if(moduloResult == 0.0) // Red Only
+    {
+        pixel.g *= 0.8;
+        pixel.b *= 0.8;
+    }
+    if(moduloResult == 1.0) // Green Only
+    {
+        pixel.r *= 0.8;
+        pixel.b *= 0.8;
+    }
+    if(moduloResult == 2.0) // Blue Only
+    {
+        pixel.r *= 0.8;
+        pixel.g *= 0.8;
+    }
+	
+	if(wavepos.x > 1.0)
+    {
+		pixel = vec4(0.0);
+    }
+    if(wavepos.y > 1.0)
+    {
+        pixel = vec4(0.0);
+    }
+    if(wavepos.x < 0.0)
+    {
+		pixel = vec4(0.0);
+    }
+    if(wavepos.y < 0.0)
+    {
+		pixel = vec4(0.0);
+    }
+
+
+	gl_FragColor = pixel;
+}
+

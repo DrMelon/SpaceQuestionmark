@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="32" tileheight="32" nextobjectid="29">
+ <tileset firstgid="1" name="Floor" tilewidth="32" tileheight="32" tilecount="400">
+  <image source="floor.png" width="640" height="640"/>
+ </tileset>
+ <tileset firstgid="401" name="Walls" tilewidth="32" tileheight="32" tilecount="36">
+  <image source="walls.png" width="192" height="192"/>
+ </tileset>
+ <layer name="Floor" width="200" height="200">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3ZUUrDQBAG4LZq9QK1ar2Aor1BBXsY738E56ELJbRJxoCbtN8HPwMJZPdhk2HIbAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwH+5jzzU3gSM1CbyWnsTAPRyE7kdUO8iy0TNrA21rSNPf6jlDD9HXhI1szbU1jzv2fpxSOkPn5FtSz2mfzB2Q/tHeT9Kf/iO7FtqZm2orat/zCOLlvtFdg6ZtzxT/2Asur7hq8jjievNM5ydQ1Y91obahs4fhfmDS9R8P7LzR2H+4BIN6R+ZecP/D6bs55CMzLzh/wdT9BZ571HhGu0iXz0qXCP9A87TPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApuUXlwjT0wBxAgA=
+  </data>
+ </layer>
+ <layer name="Walls" width="200" height="200">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3ZzQqCUBCAUX3/F8iCIAiCfjbVA+ZCqcSrxQj3CufAEBjqZj6wrCoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgaFNXVdPOdmSeieP97OrYfefuFbk+LGE/sYOHmf2c+/6f+45d66QPMjsuuOORc/VBiSJ9ROiDNZjqI/L8NEcfrEGkjyX70Qcl0gek5epjeK4+KJE+IK2UPsbog9zu7Q5ePvbwWr/n0X029ffxfm6B/f3lf2V9kNsv7/gi7wFTzl2XUxPpD5aQqw9YA31Amj4gze8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEr0AlD5kDUAcQIA
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="StartPoint" type="StartPoint" x="3024.45" y="1679.18" width="32" height="32"/>
+  <object id="5" name="Airlock2" type="AirlockVert" x="3232" y="1599" width="32" height="64"/>
+  <object id="8" name="Airlock1" type="AirlockVert" x="2976.5" y="1567.5" width="32" height="64"/>
+  <object id="9" name="Airlock3" type="AirlockHoriz" x="2816.25" y="1823" width="64" height="32"/>
+  <object id="11" name="VendingMachine" type="VendingMachine" x="2840.67" y="1556.67" width="32" height="32"/>
+  <object id="13" name="Airlock4" type="AirlockVert" x="3712.08" y="1664" width="32" height="64"/>
+  <object id="15" name="SolarN" type="Solars" x="3396" y="1602" width="254" height="59"/>
+  <object id="18" name="SolarS" type="Solars" x="3394" y="1729" width="252" height="63"/>
+  <object id="19" name="Tankrefiller" type="Tankrefiller" x="3171" y="1779" width="32" height="32"/>
+  <object id="20" name="Powercell" type="Powercell" x="2986" y="1879" width="32" height="32"/>
+  <object id="21" name="Computer" type="Computer" x="3935" y="1567" width="32" height="32"/>
+  <object id="22" name="Comsat" type="Comsat" x="3874" y="1438" width="56" height="67"/>
+  <object id="25" name="Airlock5" type="AirlockVert" x="3840" y="1792" width="32" height="64"/>
+  <object id="26" name="Wrench" type="Wrench" x="3051" y="1793" width="16" height="16"/>
+  <object id="27" name="Crisps" type="Crisps" x="3895" y="1587" width="16" height="16"/>
+  <object id="28" name="Donut" type="Donut" x="2814" y="1579" width="16" height="16"/>
+ </objectgroup>
+</map>

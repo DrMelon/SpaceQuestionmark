@@ -1,0 +1,23 @@
+﻿#version 120
+uniform sampler2D texture;
+
+uniform float time;
+
+void main() {
+    vec2 pos = gl_TexCoord[0].xy;
+	
+	// Glow Time
+	vec2 glowpos = gl_TexCoord[0].xy;
+	vec4 glowcol = texture2D(texture, glowpos) * 0.3f;
+	glowpos.x = glowpos.x - 0.003f;
+	glowcol = glowcol + texture2D(texture, glowpos) * 0.3f;
+	glowpos.x = glowpos.x + 0.006f;
+	glowcol = glowcol + texture2D(texture, glowpos) * 0.3f;
+
+
+	vec4 pixel = texture2D(texture, pos) * 0.9f;
+	pixel += glowcol * (0.6f + sin(time*0.01f+glowpos.y*10.0f) *0.5f);
+
+	gl_FragColor = pixel;
+
+}
