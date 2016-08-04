@@ -220,19 +220,8 @@ namespace SpaceQuestionmark
             }
 
             bip--;
-
-            if(Global.MachineBroken)
-            {
-                Global.MachineBrokenTime++;
-                if (Global.MachineBrokenTime > 60 * 60 * 3)
-                {
-                    if (!thePlayer.Dead)
-                    {
-                        thePlayer.Dead = true;
-                        Global.NewWords("You neglected to fix the machines.\nThey were all vital to life support.\nEven the vending machine.\n [Press P to Restart.]");
-                    }
-                }
-            }
+                
+            
 
             if(Input.KeyPressed(Key.P))
             {
@@ -243,8 +232,6 @@ namespace SpaceQuestionmark
 
         public void ResetGame()
         {
-            Global.MachineBroken = false;
-            Global.MachineBrokenTime = 0;
             Global.MsgString = "You wake up.\nPress W, S, A, D to move.\nInteract / Use Item with Left Mouse\nThrow Item with Right Mouse.\nHold Q to open item menu.\nRepair your machines!";
             Global.theGame.Surface.ClearShaders();
             Global.theGame.SwitchScene(new PlayState());

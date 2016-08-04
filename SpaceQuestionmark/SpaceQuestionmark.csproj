@@ -59,16 +59,15 @@
     <None Include="Assets\vhs2.ps" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Otter.TiledLoader\Otter.TiledLoader.csproj">
+    <ProjectReference Include="..\Libs\Otter.TiledLoader\Otter.TiledLoader.csproj">
       <Project>{d84ec669-0650-4965-8a44-92228b90c6e3}</Project>
       <Name>Otter.TiledLoader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Otter\Otter\Otter.csproj">
+    <ProjectReference Include="..\Libs\Otter\Otter\Otter.csproj">
       <Project>{236485c2-a7ba-4dcd-808a-b3a634764402}</Project>
       <Name>Otter</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

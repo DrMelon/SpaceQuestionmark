@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceQuestionmark", "SpaceQuestionmark.csproj", "{2DF65EAC-DEC2-461F-A4D2-647D1F11E6B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otter", "..\..\Otter\Otter\Otter.csproj", "{236485C2-A7BA-4DCD-808A-B3A634764402}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otter", "..\Libs\Otter\Otter\Otter.csproj", "{236485C2-A7BA-4DCD-808A-B3A634764402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otter.TiledLoader", "..\..\Otter.TiledLoader\Otter.TiledLoader.csproj", "{D84EC669-0650-4965-8A44-92228B90C6E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Otter.TiledLoader", "..\Libs\Otter.TiledLoader\Otter.TiledLoader.csproj", "{D84EC669-0650-4965-8A44-92228B90C6E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

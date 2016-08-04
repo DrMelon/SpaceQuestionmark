@@ -15,7 +15,6 @@ namespace SpaceQuestionmark
         public string FlavBroke;
         public string FlavFixing;
         float FixTime;
-        float BreakTime;
         float CurTime;
         public int Status;
         bool BeingInspected;
@@ -36,7 +35,7 @@ namespace SpaceQuestionmark
             Description = description;
             FlavBroke = flav_broke;
             FlavFixing = flav_fixin;
-            BreakTime = Rand.Float(60 * 5, 60 * 60);
+            
             FixTime = fixtime;
             AddGraphic(gfxTop);
             Graphic.CenterOrigin();
@@ -59,8 +58,6 @@ namespace SpaceQuestionmark
                 Status = 3;
             }
             CurTime = Global.theGame.Timer;
-            Global.MachineBroken = false;
-            Global.MachineBrokenTime -= 60 * 60 * 0.2f;
 
         }
 
@@ -82,20 +79,7 @@ namespace SpaceQuestionmark
             base.Update();
             if(Status == 1)
             {
-                if(Global.theGame.Timer >= CurTime + BreakTime)
-                {
-                    Break();
-                    CurTime = Global.theGame.Timer;
-                    BreakTime = Rand.Float(60 * 5, 60 * 60);
-                    if (Global.MachineBrokenTime < 60*60*3)
-                    {
-                        Global.NewWords("Warning: " + Name + " Broken!");
-                        Global.MachineBroken = true;
-                    }
-
-                }
-                
-
+            
             }
             if(Status == 3)
             {
