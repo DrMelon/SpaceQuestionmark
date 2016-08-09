@@ -25,5 +25,13 @@ namespace SpaceQuestionmark.Systems.Chemistry
     {
         public Dictionary<Reagent, int> InputReagents;
         public Dictionary<Reagent, int> OutputReagents;
+        public bool Boils = false;
+        public bool Freezes = false;
+        public float TemperatureThreshold = 0;
+
+        public void OnRecipeComplete()
+        {
+
+        }
     }
 }

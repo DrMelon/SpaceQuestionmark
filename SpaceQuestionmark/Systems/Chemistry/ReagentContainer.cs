@@ -27,6 +27,8 @@ namespace SpaceQuestionmark.Systems.Chemistry
         public int Capacity;
         public int CurrentFluidAmt;
         public Dictionary<Reagent, int> CurrentReagents;
+        public float CurrentTemperature = 21; //room temp
+        public List<Recipe> AvailableRecipes;
 
         public int GetReagentAmount(Reagent reagent)
         {
@@ -139,6 +141,23 @@ namespace SpaceQuestionmark.Systems.Chemistry
 
         public bool SatisfiesRecipe(Recipe recipeTarget)
         {
+            // Check temperature
+            if(recipeTarget.Boils)
+            {
+                if(CurrentTemperature < recipeTarget.TemperatureThreshold)
+                {
+                    return false;
+                }
+            }
+
+            if(recipeTarget.Freezes)
+            {
+                if(CurrentTemperature > recipeTarget.TemperatureThreshold)
+                {
+                    return false;
+                }
+            }
+
             // Check we have the requisite reagents
             bool hasAllReagents = true;
             bool hasEnoughReagents = true;
@@ -173,9 +192,20 @@ namespace SpaceQuestionmark.Systems.Chemistry
             {
                 RemoveMultiple(recipeTarget.InputReagents);
                 AddMultiple(recipeTarget.OutputReagents);
+                recipeTarget.OnRecipeComplete();
             }
         }
 
+        public void ResolveAllRecipes()
+        {
+            // Smaller recipes first!
+            AvailableRecipes.Sort((x, y) => x.InputReagents.Count.CompareTo(y.InputReagents.Count));
+
+            foreach(Recipe recipe in AvailableRecipes)
+            {
+                ResolveRecipe(recipe);
+            }
+        }
 
     }
 }

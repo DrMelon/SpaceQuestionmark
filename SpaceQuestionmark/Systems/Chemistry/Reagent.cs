@@ -17,6 +17,10 @@ using System.Threading.Tasks;
 // or have been ingested by living, or airbone on living
 //
 
+
+    // FOR TEMP STUFF: store name/enum in reagent container instead?
+    // then can store actual reagent objects... which have temp, amt? assign keys with amts???
+
 namespace SpaceQuestionmark.Systems.Chemistry
 {
 
@@ -39,5 +43,6 @@ namespace SpaceQuestionmark.Systems.Chemistry
         {
 
         }
+
     }
 }
