@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Otter;
+using SpaceQuestionmark.Entities;
 
 // IIIIIT'S CHEMISTRY TIME
 //
@@ -18,28 +20,27 @@ using System.Threading.Tasks;
 //
 
 
-    // FOR TEMP STUFF: store name/enum in reagent container instead?
-    // then can store actual reagent objects... which have temp, amt? assign keys with amts???
+
 
 namespace SpaceQuestionmark.Systems.Chemistry
 {
 
     class Reagent
     {
-        public String myName = "Genericium";
-        public String myDescription = "The most inert chemical in the universe.";
+        public static String myName = "Genericium";
+        public static String myDescription = "The most inert chemical in the universe.";
 
-        public void ProcessExternal()
+        public void ProcessExternal(Entity other)
         {
 
         }
 
-        public void ProcessIngested()
+        public void ProcessIngested(Living other)
         {
 
         }
 
-        public void ProcessAirborne()
+        public void ProcessAirborne(Living other)
         {
 
         }
