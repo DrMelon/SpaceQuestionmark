@@ -19,7 +19,7 @@ using Otter;
 
 namespace SpaceQuestionmark.Entities.Managers
 {
-    class FloorMaster : Entity
+    public class FloorMaster : Entity
     {
         Dictionary<int, Floor> floorMap; // the floormap!! wueuw
         Image stitchedImage;

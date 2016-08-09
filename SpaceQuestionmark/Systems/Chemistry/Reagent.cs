@@ -25,7 +25,7 @@ using SpaceQuestionmark.Entities;
 namespace SpaceQuestionmark.Systems.Chemistry
 {
 
-    class Reagent
+    public class Reagent
     {
         public static String myName = "Genericium";
         public static String myDescription = "The most inert chemical in the universe.";

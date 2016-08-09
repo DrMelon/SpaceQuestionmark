@@ -14,7 +14,7 @@ using Otter;
 
 namespace SpaceQuestionmark.Entities 
 {
-    class Item : Entity
+    public class Item : Entity
     {
         // Fields
         public String myName = "Perfectly Generic Item";

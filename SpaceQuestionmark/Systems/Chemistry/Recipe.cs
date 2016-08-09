@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace SpaceQuestionmark.Systems.Chemistry
 {
-    class Recipe
+    public class Recipe
     {
         public Dictionary<Reagent, int> InputReagents;
         public Dictionary<Reagent, int> OutputReagents;

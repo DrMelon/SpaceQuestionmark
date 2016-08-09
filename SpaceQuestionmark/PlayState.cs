@@ -45,11 +45,6 @@ namespace SpaceQuestionmark
         // we need text-reveal mode or sth. edit richtext?
 
         Systems.Chemistry.ReagentContainer bucket = new Systems.Chemistry.ReagentContainer();
-        Systems.Chemistry.Reagent waterReagent = new Systems.Chemistry.Reagents.Water();
-        Systems.Chemistry.Reagent iceReagent = new Systems.Chemistry.Reagents.Ice();
-
-
-        Systems.Chemistry.Recipes.WaterFreeze waterFreeze;
 
 
         public PlayState()
@@ -99,12 +94,12 @@ namespace SpaceQuestionmark
             //
             //
             //
-            waterFreeze = new Systems.Chemistry.Recipes.WaterFreeze((Systems.Chemistry.Reagents.Water)waterReagent, (Systems.Chemistry.Reagents.Ice)iceReagent);
+            Systems.Chemistry.MasterList.PopulateRecipes();
 
             bucket.Capacity = 10;
-            bucket.AvailableRecipes.Add(waterFreeze);
+            bucket.AvailableRecipes.Add(Systems.Chemistry.MasterList.RecipeWaterFreeze);
 
-            bucket.AddReagent(waterReagent, 10);
+            bucket.AddReagent(Systems.Chemistry.MasterList.Water, 10);
 
             Util.Log("Added 10 water to bucket");
 

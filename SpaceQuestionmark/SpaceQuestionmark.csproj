@@ -56,6 +56,7 @@
     <Compile Include="PlayState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Systems\Chemistry\MasterList.cs" />
     <Compile Include="Systems\Chemistry\Reagent.cs" />
     <Compile Include="Systems\Chemistry\ReagentContainer.cs" />
     <Compile Include="Systems\Chemistry\Reagents\Ice.cs" />

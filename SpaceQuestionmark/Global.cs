@@ -29,5 +29,7 @@ namespace SpaceQuestionmark
             MsgString = msg;
             ResetBox = true;
         }
+
+
     }
 }
