@@ -26,9 +26,9 @@ namespace SpaceQuestionmark.Systems.Chemistry
     {
         public int Capacity;
         public int CurrentFluidAmt;
-        public Dictionary<Reagent, int> CurrentReagents;
+        public Dictionary<Reagent, int> CurrentReagents = new Dictionary<Reagent, int>();
         public float CurrentTemperature = 21; //room temp
-        public List<Recipe> AvailableRecipes;
+        public List<Recipe> AvailableRecipes = new List<Recipe>();
 
         public int GetReagentAmount(Reagent reagent)
         {
@@ -169,7 +169,7 @@ namespace SpaceQuestionmark.Systems.Chemistry
                 }
                 else
                 {
-                    if(CurrentReagents[recipeReagent.Key] >= recipeReagent.Value)
+                    if(CurrentReagents[recipeReagent.Key] < recipeReagent.Value)
                     {
                         hasEnoughReagents = false;
                     }

@@ -55,12 +55,15 @@ namespace SpaceQuestionmark
         Image tiles;
 
 
+
+
+
         // leftmouse : use
         // e: pick up, inspect
         // q: radial menu
 
         public bool RenderRadial = false;
-        public Machine inspectMachine = null;
+        //public Machine inspectMachine = null;
         public bool RenderDetail = false;
         public float InspectTime = 300;
         public float StartInspect;
@@ -112,6 +115,7 @@ namespace SpaceQuestionmark
 
         }
 
+        /*
         public void HandleInput()
         {
             myController = Global.thePlayerSession.GetController<ControllerXbox360>();
@@ -172,7 +176,7 @@ namespace SpaceQuestionmark
                                     Collider target = crossHair.Collide(crossHair.X, crossHair.Y, 6);
                                     if (target.Entity.GetType().Name == "Machine")
                                     {
-                                        Machine theMachine = (Machine)target.Entity;
+                                        //Machine theMachine = (Machine)target.Entity;
                                         Global.ResetBox = true;
                                         Global.MsgString = theMachine.Name + ":\n" + theMachine.Description;
                                         if (theMachine.Status == 2)
@@ -184,7 +188,7 @@ namespace SpaceQuestionmark
                                             Global.MsgString += "\n" + theMachine.FlavFixing;
                                         }
 
-                                        inspectMachine = theMachine;
+                                       // inspectMachine = theMachine;
                                         RenderDetail = true;
                                         StartInspect = Global.theGame.Timer;
                                     }
@@ -630,7 +634,7 @@ namespace SpaceQuestionmark
 
 
         }
-
+        */
         public void MoveInDirection(Vector2 moveDelta)
         {
             mySpeed.X += moveDelta.X;
@@ -677,7 +681,7 @@ namespace SpaceQuestionmark
         { 
             base.Update();
             
-            HandleInput();
+            //HandleInput();
             
 
             // not on floor, not inside!
@@ -794,6 +798,7 @@ namespace SpaceQuestionmark
         public override void Render()
         {
             base.Render();
+            /*
             // if inspect is open, render it
             if (RenderDetail && inspectMachine != null)
             {
@@ -821,7 +826,7 @@ namespace SpaceQuestionmark
                 inspectMachine.gfxDetail.Y = Y - 30;
                 inspectMachine.gfxDetail.Render();
             }
-
+            */
 
             // if radial is open, render it
             if (RenderRadial)

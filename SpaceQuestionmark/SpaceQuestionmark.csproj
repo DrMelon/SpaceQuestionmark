@@ -58,7 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\Chemistry\Reagent.cs" />
     <Compile Include="Systems\Chemistry\ReagentContainer.cs" />
+    <Compile Include="Systems\Chemistry\Reagents\Ice.cs" />
+    <Compile Include="Systems\Chemistry\Reagents\Water.cs" />
     <Compile Include="Systems\Chemistry\Recipe.cs" />
+    <Compile Include="Systems\Chemistry\Recipes\WaterFreeze.cs" />
     <Compile Include="Systems\Time.cs" />
     <Compile Include="UI\Textbox.cs" />
   </ItemGroup>

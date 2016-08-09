@@ -31,7 +31,7 @@ namespace SpaceQuestionmark.UI
             Graphic.Scroll = 0;
 
             // Create RichText 
-            Text = new RichText("")
+            Text = new RichText("");
             
             // Add borders & corners
  

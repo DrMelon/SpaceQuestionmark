@@ -43,9 +43,14 @@ namespace SpaceQuestionmark
         int msgCurrentChar;
         int bip;
         // we need text-reveal mode or sth. edit richtext?
-        
-        
-          
+
+        Systems.Chemistry.ReagentContainer bucket = new Systems.Chemistry.ReagentContainer();
+        Systems.Chemistry.Reagent waterReagent = new Systems.Chemistry.Reagents.Water();
+        Systems.Chemistry.Reagent iceReagent = new Systems.Chemistry.Reagents.Ice();
+
+
+        Systems.Chemistry.Recipes.WaterFreeze waterFreeze;
+
 
         public PlayState()
         {
@@ -89,9 +94,19 @@ namespace SpaceQuestionmark
             TiledObjectGroup mapObjects = (TiledObjectGroup)mapProject.Layers[2];
             TiledObject strt = mapObjects.Objects[0];
 
-            // Make machines
+            // TEST REAGENTS
+            // WOOO
+            //
+            //
+            //
+            waterFreeze = new Systems.Chemistry.Recipes.WaterFreeze((Systems.Chemistry.Reagents.Water)waterReagent, (Systems.Chemistry.Reagents.Ice)iceReagent);
 
+            bucket.Capacity = 10;
+            bucket.AvailableRecipes.Add(waterFreeze);
 
+            bucket.AddReagent(waterReagent, 10);
+
+            Util.Log("Added 10 water to bucket");
 
 
             CameraX = strt.X - 320;
@@ -110,44 +125,7 @@ namespace SpaceQuestionmark
             // Make items / machines
             for (int i = 0; i < mapObjects.Objects.Count; i++)
             {
-                TiledObject curObj = mapObjects.Objects[i];
-                if (curObj.Name == "Wrench")
-                {
-                    Item newWrench = new Item(curObj.X, curObj.Y, 4);
-                    Add(newWrench);
-                }
-                if (curObj.Name == "Crisps")
-                {
-                    Item newWrench = new Item(curObj.X, curObj.Y, 7);
-                    Add(newWrench);
-                }
-                if (curObj.Name == "Donut")
-                {
-                    Item newWrench = new Item(curObj.X, curObj.Y, 6);
-                    Add(newWrench);
-                }
-                if (curObj.Name == "VendingMachine")
-                {
-                    Machine newMachine = new Machine(curObj.X, curObj.Y, "Vending Machine", "Full of delicious snacks.", "Looks like it's busted.", "It's rebooting.", 300, Assets.GFX_MACHINETOP, Assets.GFX_VENDING);
-                    Add(newMachine);
-                }
-                if (curObj.Name == "Computer")
-                {
-                    Machine newMachine = new Machine(curObj.X, curObj.Y, "Computer", "The communications terminal... me.", "ERROR: HHHH\nhelp\n \n{color:ff0000}ERRCODE#391293EFF3{color:ffffff}", "It was just a screensaver.\nYou idiot.", 600, Assets.GFX_PC_TOP, Assets.GFX_PC_FRONT);
-                    Add(newMachine);
-                }
-                if (curObj.Type == "AirlockVert")
-                {
-                    Airlock newAirlock = new Airlock(curObj.X, curObj.Y, true);
-                    Add(newAirlock);
-
-                }
-                if (curObj.Type == "AirlockHoriz")
-                {
-                    Airlock newAirlock = new Airlock(curObj.X, curObj.Y, false);
-                    Add(newAirlock);
-
-                }
+               
             }
 
             AddGraphic(wallTiles);
@@ -196,6 +174,15 @@ namespace SpaceQuestionmark
             starFieldFar.X -= 0.1f;
             starFieldMid.X -= 0.5f;
             starFieldClose.X -= 1.0f;
+
+            bucket.CurrentTemperature -= 0.05f;
+            Util.Log("Bucket Reagents: ");
+            foreach(KeyValuePair<Systems.Chemistry.Reagent, int> reagent in bucket.CurrentReagents)
+            {
+                Util.Log(reagent.Key.ToString() + ": " + reagent.Value.ToString());
+            }
+            Util.Log("Temp: " + bucket.CurrentTemperature.ToString());
+            bucket.ResolveAllRecipes();
 
             // bounce zoom?
             CameraZoom = 2.0f + (((float)Math.Sin(Global.theGame.Timer * 0.01f) * 0.2f) * swayAmt);
