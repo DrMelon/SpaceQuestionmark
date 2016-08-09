@@ -9,5 +9,11 @@ namespace SpaceQuestionmark.Entities
 {
     class Living : Entity
     {
+
+
+        public void DoItemCollided(Item other)
+        {
+
+        }
     }
 }

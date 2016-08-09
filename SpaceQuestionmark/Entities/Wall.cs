@@ -9,5 +9,11 @@ namespace SpaceQuestionmark.Entities
 {
     class Wall : Entity
     {
+
+
+        public void DoItemCollided(Item other)
+        {
+
+        }
     }
 }

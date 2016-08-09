@@ -42,7 +42,7 @@ namespace SpaceQuestionmark.Entities
 
         public bool IsTouchingFloor()
         {
-            return Overlap(X, Y, (int)Global.ColliderTags.FLOOR);
+            return IsFloorCollide(X, Y);
         }
 
         public bool IsLivingCollide(float dx, float dy)
@@ -53,6 +53,7 @@ namespace SpaceQuestionmark.Entities
             if(didCollide)
             {
                 DoCollideWithLiving((Living)Overlapped);
+                ((Living)Overlapped).DoItemCollided(this);
             }
             
 
@@ -67,6 +68,7 @@ namespace SpaceQuestionmark.Entities
             if (didCollide)
             {
                 DoCollideWithMachine((Machine)Overlapped);
+                ((Machine)Overlapped).DoItemCollided(this);
             }
 
             return didCollide;
@@ -80,6 +82,7 @@ namespace SpaceQuestionmark.Entities
             if (didCollide)
             {
                 DoCollideWithWall((Wall)Overlapped);
+                ((Wall)Overlapped).DoItemCollided(this);
             }
 
             return didCollide;
@@ -94,10 +97,27 @@ namespace SpaceQuestionmark.Entities
             if (didCollide)
             {
                 DoCollideWithItem((Item)Overlapped);
+                ((Item)Overlapped).DoItemCollided(this);
             }
 
             return didCollide;
         }
+
+        public bool IsFloorCollide(float dx, float dy)
+        {
+            bool didCollide = false;
+            didCollide = Overlap(X + dx, Y + dy, (int)Global.ColliderTags.FLOOR);
+            didCollide = (Overlapped != this);
+
+            if (didCollide)
+            {
+                DoCollideWithFloor((Floor)Overlapped);
+                ((Floor)Overlapped).DoItemCollided(this);
+            }
+
+            return didCollide;
+        }
+
 
         public bool IsBounceCollide(float dx, float dy)
         {
@@ -124,6 +144,16 @@ namespace SpaceQuestionmark.Entities
 
         }
 
+        public void DoCollideWithFloor(Floor other)
+        {
+
+        }
+
+        public void DoItemCollided(Item other)
+        {
+
+        }
+
         public void DoOnMoved(float prevX, float prevY, float newX, float newY)
         {
 
@@ -138,7 +168,7 @@ namespace SpaceQuestionmark.Entities
             {
                 mySpeed.X *= myFriction;
                 mySpeed.Y *= myFriction;
-            }
+            }   
 
             if (IsBounceCollide(mySpeed.X, 0))
             {
@@ -154,8 +184,6 @@ namespace SpaceQuestionmark.Entities
 
             DoOnMoved(X - (mySpeed.X * dt), Y - (mySpeed.Y * dt), X, Y);
         }
-
-
-
+        
     }
 }

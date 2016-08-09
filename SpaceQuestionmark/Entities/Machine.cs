@@ -9,5 +9,12 @@ namespace SpaceQuestionmark.Entities
 {
     class Machine : Entity
     {
+
+
+        public void DoItemCollided(Item other)
+        {
+
+        }
+
     }
 }
