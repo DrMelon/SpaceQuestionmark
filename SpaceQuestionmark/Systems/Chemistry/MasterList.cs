@@ -12,10 +12,12 @@ namespace SpaceQuestionmark.Systems.Chemistry
         // REAGENTS
         public static Reagent Water = new Reagents.Water();
         public static Reagent Ice = new Reagents.Ice();
-
+        public static Reagent HumanBlood = new Reagents.HumanBlood();
 
         // RECIPES
         public static Recipe RecipeWaterFreeze;
+
+        
 
         public static void PopulateRecipes()
         {

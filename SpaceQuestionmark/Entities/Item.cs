@@ -14,7 +14,7 @@ using Otter;
 
 namespace SpaceQuestionmark.Entities 
 {
-    public class Item : Entity
+    public class Item : EntityEx
     {
         // Fields
         public String myName = "Perfectly Generic Item";
@@ -50,6 +50,11 @@ namespace SpaceQuestionmark.Entities
             return (IsCollideWith<Wall>(dx, dy, (int)Global.GetColliderTagForType<Wall>()) || 
                     IsCollideWith<Machine>(dx, dy, (int)Global.GetColliderTagForType<Machine>()) ||
                     IsCollideWith<Living>(dx, dy, (int)Global.GetColliderTagForType<Living>()));
+        }
+
+        public void UseOn<T>(T other) where T : Entity
+        {
+            UsedBy(this);
         }
 
         public void DoOnMoved(float prevX, float prevY, float newX, float newY)

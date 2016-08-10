@@ -16,7 +16,7 @@ using Otter;
 
 namespace SpaceQuestionmark.Entities
 {
-    public class Floor : Entity
+    public class Floor : EntityEx
     {
         public String myName = "Perfectly Generic Floor";
         public String myDescription = "This is a Perfectly Generic Floor, and it's Perfectly Boring! Wow!";

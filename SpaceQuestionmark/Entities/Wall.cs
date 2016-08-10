@@ -7,7 +7,7 @@ using Otter;
 
 namespace SpaceQuestionmark.Entities
 {
-    public class Wall : Entity
+    public class Wall : EntityEx
     {
 
 
