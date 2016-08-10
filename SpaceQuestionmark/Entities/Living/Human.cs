@@ -40,6 +40,7 @@ namespace SpaceQuestionmark.Entities
         public Systems.Body.Bodypart Butt;
         public Systems.Body.Bodypart Eyes;
         public Systems.Body.Bodypart Mouth;
+        public Systems.Body.Bodypart Brain;
         public Systems.Body.Bodypart Heart;
         public Systems.Body.Bodypart Lungs;
         public Systems.Body.Bodypart Guts;
@@ -98,6 +99,11 @@ namespace SpaceQuestionmark.Entities
             Eyes.myDescription = "The two weird spheres that let a human like, see things or whatever.";
             Eyes.internalOrgan = true;
 
+            Brain = new Systems.Body.Bodypart();
+            Brain.myName = "Brain";
+            Brain.myDescription = "Kinda important for humans. Dunno why.";
+            Brain.internalOrgan = true;
+
             Mouth = new Systems.Body.Bodypart();
             Mouth.myName = "Mouth";
             Mouth.myDescription = "The loud bit of a human.";
@@ -142,6 +148,7 @@ namespace SpaceQuestionmark.Entities
             Torso.AddBodypart(Guts, 1.0f);
 
             Head.AddBodypart(Eyes, 1.0f);
+            Head.AddBodypart(Brain, 5.0f);
 
             // Define part abilities!
             LeftHand.canGrasp = true;

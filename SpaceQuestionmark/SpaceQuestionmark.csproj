@@ -63,6 +63,7 @@
     <Compile Include="Systems\Chemistry\MasterList.cs" />
     <Compile Include="Systems\Chemistry\Reagent.cs" />
     <Compile Include="Systems\Chemistry\ReagentContainer.cs" />
+    <Compile Include="Systems\Chemistry\Reagents\HumanBlood.cs" />
     <Compile Include="Systems\Chemistry\Reagents\Ice.cs" />
     <Compile Include="Systems\Chemistry\Reagents\Water.cs" />
     <Compile Include="Systems\Chemistry\Recipe.cs" />
