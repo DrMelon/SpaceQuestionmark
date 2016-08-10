@@ -1,0 +1,29 @@
+////// YOOO MY EXTENDED METHODS SONNN
+///
+/// Otter.Entity - DrMelon 2016
+///
+
+        public bool IsCollideWith<T>(float dx, float dy, int colliderTag) where T : Entity
+        {
+            bool didCollide = false;
+            didCollide = Overlap(X + dx, Y + dy, colliderTag);
+            didCollide = (Overlapped != this);
+
+            if (didCollide)
+            {
+                DoCollideWith<T>((T)Overlapped);
+                ((T)Overlapped).DoCollidedBy<T>((T)this);
+            }
+
+            return didCollide;
+        }
+
+        public void DoCollideWith<T>(T other)
+        {
+
+        }
+
+        public void DoCollidedBy<T>(T other)
+        {
+
+        }

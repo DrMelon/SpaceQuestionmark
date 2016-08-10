@@ -21,8 +21,13 @@ namespace SpaceQuestionmark.Entities.Managers
 {
     public class FloorMaster : Entity
     {
-        Dictionary<int, Floor> floorMap; // the floormap!! wueuw
+        Dictionary<int, Floor> floorMap = new Dictionary<int, Floor>(); // the floormap!! wueuw
+
+        // it makes one big image outta all the tiles. or something like that anyway?
+        // maybe instead just use a Tilemap for the image
         Image stitchedImage;
+
+        // wowwww! you can have collisions! if you try very hard!!
         GridCollider collisionMap;
 
         public int GetHashForCoordinate(int x, int y)

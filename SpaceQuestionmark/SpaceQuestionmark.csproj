@@ -48,6 +48,7 @@
     <Compile Include="Entities\Floor.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Living.cs" />
+    <Compile Include="Entities\Living\Human.cs" />
     <Compile Include="Entities\Machine.cs" />
     <Compile Include="Entities\Managers\FloorMaster.cs" />
     <Compile Include="Entities\Wall.cs" />

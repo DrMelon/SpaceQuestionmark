@@ -47,10 +47,5 @@ namespace SpaceQuestionmark.Entities
             
         }
 
-        public void DoItemCollided(Item other)
-        {
-
-        }
-
     }
 }

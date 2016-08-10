@@ -30,6 +30,30 @@ namespace SpaceQuestionmark
             ResetBox = true;
         }
 
+        public static ColliderTags GetColliderTagForType<T>()
+        {
+            if(typeof(T) == typeof(Entities.Floor))
+            {
+                return ColliderTags.FLOOR;
+            }
+            if (typeof(T) == typeof(Entities.Wall))
+            {
+                return ColliderTags.WALL;
+            }
+            if (typeof(T) == typeof(Entities.Machine))
+            {
+                return ColliderTags.MACHINE;
+            }
+            if (typeof(T) == typeof(Entities.Living))
+            {
+                return ColliderTags.LIVING;
+            }
+            if (typeof(T) == typeof(Entities.Item))
+            {
+                return ColliderTags.ITEM;
+            }
 
+            return ColliderTags.DEFAULT;
+        }
     }
 }

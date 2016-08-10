@@ -42,116 +42,14 @@ namespace SpaceQuestionmark.Entities
 
         public bool IsTouchingFloor()
         {
-            return IsFloorCollide(X, Y);
+            return IsCollideWith<Floor>(0, 0, (int)Global.GetColliderTagForType<Floor>());
         }
-
-        public bool IsLivingCollide(float dx, float dy)
-        {
-            bool didCollide = false;
-            didCollide = Overlap(X + dx, Y + dy, (int)Global.ColliderTags.LIVING);
-
-            if(didCollide)
-            {
-                DoCollideWithLiving((Living)Overlapped);
-                ((Living)Overlapped).DoItemCollided(this);
-            }
-            
-
-            return didCollide;
-        }
-
-        public bool IsMachineCollide(float dx, float dy)
-        {
-            bool didCollide = false;
-            didCollide = Overlap(X + dx, Y + dy, (int)Global.ColliderTags.MACHINE);
-
-            if (didCollide)
-            {
-                DoCollideWithMachine((Machine)Overlapped);
-                ((Machine)Overlapped).DoItemCollided(this);
-            }
-
-            return didCollide;
-        }
-
-        public bool IsWallCollide(float dx, float dy)
-        {
-            bool didCollide = false;
-            didCollide = Overlap(X + dx, Y + dy, (int)Global.ColliderTags.WALL);
-
-            if (didCollide)
-            {
-                DoCollideWithWall((Wall)Overlapped);
-                ((Wall)Overlapped).DoItemCollided(this);
-            }
-
-            return didCollide;
-        }
-
-        public bool IsItemCollide(float dx, float dy)
-        {
-            bool didCollide = false;
-            didCollide = Overlap(X + dx, Y + dy, (int)Global.ColliderTags.ITEM);
-            didCollide = (Overlapped != this);
-
-            if (didCollide)
-            {
-                DoCollideWithItem((Item)Overlapped);
-                ((Item)Overlapped).DoItemCollided(this);
-            }
-
-            return didCollide;
-        }
-
-        public bool IsFloorCollide(float dx, float dy)
-        {
-            bool didCollide = false;
-            didCollide = Overlap(X + dx, Y + dy, (int)Global.ColliderTags.FLOOR);
-            didCollide = (Overlapped != this);
-
-            if (didCollide)
-            {
-                DoCollideWithFloor((Floor)Overlapped);
-                ((Floor)Overlapped).DoItemCollided(this);
-            }
-
-            return didCollide;
-        }
-
-
+        
         public bool IsBounceCollide(float dx, float dy)
         {
-            return (IsLivingCollide(dx, dy) || IsWallCollide(dx, dy) || IsMachineCollide(dx, dy) || IsItemCollide(dx, dy));
-        }
-
-        public void DoCollideWithLiving(Living other)
-        {
-
-        }
-
-        public void DoCollideWithMachine(Machine other)
-        {
-
-        }
-
-        public void DoCollideWithWall(Wall other)
-        {
-
-        }
-
-        public void DoCollideWithItem(Item other)
-        {
-
-        }
-
-        public void DoCollideWithFloor(Floor other)
-        {
-
-        }
-
-        public void DoItemCollided(Item other)
-        {
-
+            return (IsCollideWith<Wall>(dx, dy, (int)Global.GetColliderTagForType<Wall>()) || 
+                    IsCollideWith<Machine>(dx, dy, (int)Global.GetColliderTagForType<Machine>()) ||
+                    IsCollideWith<Living>(dx, dy, (int)Global.GetColliderTagForType<Living>()));
         }
 
         public void DoOnMoved(float prevX, float prevY, float newX, float newY)
@@ -178,6 +76,9 @@ namespace SpaceQuestionmark.Entities
             {
                 mySpeed.Y *= -myBounciness;
             }
+
+            // Check item collisions
+            IsCollideWith<Item>(mySpeed.X, mySpeed.Y, (int)Global.GetColliderTagForType<Item>());
 
             X += mySpeed.X * dt;
             Y += mySpeed.Y * dt;
