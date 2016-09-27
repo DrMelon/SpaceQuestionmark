@@ -19,6 +19,8 @@ namespace SpaceQuestionmark.Entities
         public string myName = "Entity";
         public string myDescription = "Amazing.";
 
+        public Systems.Time.TimeGroup myTimeGroup = Systems.Time.TimeGroup.WORLDTHINK;
+
 
         // YOOO MY EXTENDED METHODS SONNN - DrMelon 2016
         public bool IsCollideWith<T>(float dx, float dy, int colliderTag) where T : EntityEx

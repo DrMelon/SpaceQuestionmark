@@ -21,9 +21,12 @@ namespace SpaceQuestionmark.Entities
         public String myDescription = "This is a Perfectly Generic Item, and it's Perfectly Boring! Wow!";
         public Speed mySpeed = new Speed(150);
         public List<Systems.Time.TimeGroup> timeGroups = new List<Systems.Time.TimeGroup>();
+        public Systems.Inventory parentInventory;
 
         public float myFriction = 0.92f;
         public float myBounciness = 0.95f;
+        public float mySize = 1;
+        
         
 
         // Methods

@@ -22,7 +22,7 @@ namespace SpaceQuestionmark.Entities
 {
     class Human : Living
     {
-        public string myName = "Person McPerson";
+        public string myName = "Normal Human";
         
         public string myDescription { get { return GetDescription(); } set { myDescription = value; } }
 
@@ -45,7 +45,39 @@ namespace SpaceQuestionmark.Entities
         public Systems.Body.Bodypart Lungs;
         public Systems.Body.Bodypart Guts;
 
+        // Reagent container yooo
+        public Systems.Chemistry.ReagentContainer myReagentContainer;
+
         public Human()
+        {
+            // Aw yea i got dat bod
+            SetUpBody();
+
+            // Set up reagent container!
+            myReagentContainer = new Systems.Chemistry.ReagentContainer();
+            myReagentContainer.Capacity = 100;
+
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            // Move about a bit
+        }
+
+        public string GetDescription()
+        {
+            // This will fetch a description of the character, including what they're wearing/wielding.
+            string description = "";
+            description += "A human being. Averagely-sized curious people.";
+
+            // Get Inventory/Equip
+
+            return description;
+        }
+
+        public void SetUpBody()
         {
             myBody = new Systems.Body.Body();
             myBody.Owner = this;
@@ -162,24 +194,6 @@ namespace SpaceQuestionmark.Entities
             RightFoot.canEquip = true;
 
             Head.canEquip = true;
-        }
-
-        public override void Update()
-        {
-            base.Update();
-
-            // Move about a bit
-        }
-
-        public string GetDescription()
-        {
-            // This will fetch a description of the character, including what they're wearing/wielding.
-            string description = "";
-            description += "A human being. Averagely-sized curious people.";
-
-            // Get Inventory/Equip
-
-            return description;
         }
     }
 }
