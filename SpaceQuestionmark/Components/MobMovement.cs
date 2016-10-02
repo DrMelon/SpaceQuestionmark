@@ -117,8 +117,12 @@ namespace SpaceQuestionmark.Components
 
             HandleInput(dt);
 
-            myVelocity.X += myMotion.X * dt;
-            myVelocity.Y += myMotion.Y * dt;
+            if(currentMoveType != MoveType.FALL)
+            {
+                myVelocity.X += myMotion.X * dt;
+                myVelocity.Y += myMotion.Y * dt;
+            }
+            
 
             if (Math.Abs(myAcceleration.X) < 0.1f || Math.Abs(myAcceleration.Y) < 0.1f)
             {
@@ -172,7 +176,7 @@ namespace SpaceQuestionmark.Components
 
             if(!myEnt.IsCollideWith<Entities.Floor>(0, 0, (int)Global.GetColliderTagForType<Entities.Floor>()))
             {
-                //currentMoveType = MoveType.FALL;
+                currentMoveType = MoveType.FALL;
             }
 
         }
