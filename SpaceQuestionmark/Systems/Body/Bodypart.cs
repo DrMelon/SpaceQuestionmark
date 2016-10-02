@@ -26,7 +26,7 @@ namespace SpaceQuestionmark.Systems.Body
         public Systems.Chemistry.Reagent bleedReagent = null;
 
         // body parts can have more parts inside them
-        public Dictionary<Bodypart, float> myBodyParts;
+        public Dictionary<Bodypart, float> myBodyParts = new Dictionary<Bodypart, float>();
 
         public float GetVitality()
         {

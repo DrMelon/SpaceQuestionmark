@@ -11,7 +11,7 @@ namespace SpaceQuestionmark.Systems.Chemistry.Reagents
         public HumanBlood()
         {
             myName = "Blood";
-            myDescription = "It's blood. Dark red and shiny. Mammalian.";
+            myDescription = "It's blood. Dark red and shiny. Mammalian, possibly.";
         }
     }
 }

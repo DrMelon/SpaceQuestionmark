@@ -16,7 +16,6 @@ namespace SpaceQuestionmark.Components
 {
     class MobMovement : Component
     {
-
         public enum MoveType
         {
             WALK,
@@ -26,18 +25,18 @@ namespace SpaceQuestionmark.Components
             BOOSTED
         }
 
-
+        public Speed myMotion = new Speed(1200);
         public Speed myVelocity = new Speed(1200);
 
-        public float walkSpeed = 12;
-        public float runSpeed = 18;
+        public float walkSpeed = 3;
+        public float runSpeed = 12;
         public float slideSpeed = 60;
         public float fallSpeed = 120;
         public float boostSpeed = 120;
 
-        public Speed myAcceleration = new Speed(32);
+        public Speed myAcceleration = new Speed(12);
 
-        public float myGroundFriction = 0.85f;
+        public float myGroundFriction = 0.80f;
         public float mySpaceFriction = 1.0f;
 
         public Entities.EntityEx myEnt;
@@ -51,13 +50,28 @@ namespace SpaceQuestionmark.Components
             base.Added();
 
             myEnt = Entity as Entities.EntityEx;
+            myVelocity.HardClamp = true;
         }
 
         public void HandleInput(float dt)
         {
-            myAcceleration.X = myController.LeftStick.X;
-            myAcceleration.Y = myController.LeftStick.Y;
+            if (Math.Abs(myController.LeftStick.X) > 0.1f)
+            {
+                myAcceleration.X = myController.LeftStick.X * 320;
+            }
+            else
+            {
+                myAcceleration.X = 0.0f;
+            }
 
+            if (Math.Abs(myController.LeftStick.Y) > 0.1f)
+            {
+                myAcceleration.Y= myController.LeftStick.Y * 320;
+            }
+            else
+            {
+                myAcceleration.Y = 0.0f;
+            }
         }
 
         public override void Update()
@@ -68,60 +82,80 @@ namespace SpaceQuestionmark.Components
             switch (currentMoveType)
             {
                 case MoveType.WALK:
-                    myVelocity.Max = walkSpeed;
+                    myMotion.Max = walkSpeed;
                     break;
 
                 case MoveType.RUN:
-                    myVelocity.Max = runSpeed;
+                    myMotion.Max = runSpeed;
                     break;
 
                 case MoveType.SLIDE:
-                    myVelocity.Max = slideSpeed;
+                    myMotion.Max = slideSpeed;
                     break;
 
                 case MoveType.FALL:
-                    myVelocity.Max = fallSpeed;
+                    myMotion.Max = fallSpeed;
                     break;
 
                 case MoveType.BOOSTED:
-                    myVelocity.Max = boostSpeed;
+                    myMotion.Max = boostSpeed;
                     break;
             }
 
             HandleInput(dt);
 
-            myVelocity.X += myAcceleration.X * dt;
-            myVelocity.Y += myAcceleration.Y * dt;
+            myMotion.X += myAcceleration.X * dt;
+            myMotion.Y += myAcceleration.Y * dt;
 
-            if (Math.Abs(myAcceleration.X) < 0.01f && Math.Abs(myAcceleration.Y) < 0.01f)
+            myVelocity.X = myMotion.X * Math.Abs(myController.LeftStick.X);
+            myVelocity.Y = myMotion.Y * Math.Abs(myController.LeftStick.Y);
+
+            if (Math.Abs(myAcceleration.X) < 0.1f || Math.Abs(myAcceleration.Y) < 0.1f)
             {
+                float alterFriction = 1.0f;
                 switch (currentMoveType)
                 { 
                     case MoveType.WALK:
-                        myVelocity.X *= myGroundFriction;
-                        myVelocity.Y *= myGroundFriction;
+                        alterFriction = myGroundFriction;
                     break;
 
                     case MoveType.RUN:
-                        myVelocity.X *= myGroundFriction;
-                        myVelocity.Y *= myGroundFriction;
+                        alterFriction = myGroundFriction;
                         break;
 
                     case MoveType.SLIDE:
-                        myVelocity.X *= myGroundFriction * 0.5f;
-                        myVelocity.Y *= myGroundFriction * 0.5f;
+                        alterFriction = myGroundFriction * 2.0f;
+                        if (alterFriction > 1.0f)
+                        {
+                            alterFriction = 1.0f;
+                        }
                         break;
 
                     case MoveType.FALL:
-                        myVelocity.X *= mySpaceFriction;
-                        myVelocity.Y *= mySpaceFriction;
+                        alterFriction = mySpaceFriction;
                         break;
 
                     case MoveType.BOOSTED:
-                        myVelocity.X *= mySpaceFriction;
-                        myVelocity.Y *= mySpaceFriction;
+                        alterFriction = mySpaceFriction;
                         break;
                 }
+
+                if(Math.Abs(myAcceleration.X) < 0.01f)
+                {
+                    myMotion.X *= alterFriction;
+                }
+                if (Math.Abs(myAcceleration.Y) < 0.01f)
+                {
+                    myMotion.Y *= alterFriction;
+                }
+
+
+            }
+
+            while(myEnt.IsCollideWith<Entities.Wall>(myVelocity.X, myVelocity.Y, (int)Global.GetColliderTagForType<Entities.Wall>()))
+            {
+                myVelocity.X *= 0.5f;
+                myVelocity.Y *= 0.5f;
             }
 
             myEnt.X += myVelocity.X;

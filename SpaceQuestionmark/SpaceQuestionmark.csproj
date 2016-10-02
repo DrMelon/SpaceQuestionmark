@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Airlock.cs" />
     <Compile Include="Assets.cs" />
+    <Compile Include="Components\MobMovement.cs" />
     <Compile Include="Entities\EntityEx.cs" />
     <Compile Include="Entities\Floor.cs" />
     <Compile Include="Entities\Item.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Systems\Chemistry\Reagents\Water.cs" />
     <Compile Include="Systems\Chemistry\Recipe.cs" />
     <Compile Include="Systems\Chemistry\Recipes\WaterFreeze.cs" />
+    <Compile Include="Systems\Inventory.cs" />
     <Compile Include="Systems\Time.cs" />
     <Compile Include="UI\Textbox.cs" />
   </ItemGroup>

@@ -32,7 +32,7 @@ namespace SpaceQuestionmark.Systems
 
         public static float GetDeltaTime(TimeGroup timeGroup = TimeGroup.DEFAULT)
         {
-            float deltaTime = Otter.Game.Instance.RealDeltaTime;
+            float deltaTime = Otter.Game.Instance.RealDeltaTime * 0.001f;
 
             switch (timeGroup)
             {

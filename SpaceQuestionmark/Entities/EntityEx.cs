@@ -26,8 +26,7 @@ namespace SpaceQuestionmark.Entities
         public bool IsCollideWith<T>(float dx, float dy, int colliderTag) where T : EntityEx
         {
             bool didCollide = false;
-            didCollide = Overlap(X + dx, Y + dy, colliderTag);
-            didCollide = (Overlapped != this);
+            didCollide = Overlap(X + dx, Y + dy, colliderTag) && (Overlapped != this) && (Overlapped != null);
 
             if (didCollide)
             {

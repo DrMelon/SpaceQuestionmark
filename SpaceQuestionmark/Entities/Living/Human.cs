@@ -23,7 +23,14 @@ namespace SpaceQuestionmark.Entities
     class Human : Living
     {
         public string myName = "Normal Human";
-        
+
+        public Dictionary<string, string> myCostume = Assets.GFX_PLAYER_DEBUG_COSTUME;
+
+        public Otter.Spritemap<string> myLegsSprite;
+        public Otter.Spritemap<string> myTorsoSprite;
+        public Otter.Spritemap<string> myArmsSprite;
+        public Otter.Spritemap<string> myHeadSprite;
+
         public string myDescription { get { return GetDescription(); } set { myDescription = value; } }
 
         // My organs!!
@@ -57,6 +64,67 @@ namespace SpaceQuestionmark.Entities
             myReagentContainer = new Systems.Chemistry.ReagentContainer();
             myReagentContainer.Capacity = 100;
 
+            // Set up my clothes. Don't wanna be nakes!! (or invisible. lol)
+            UpdateClothing();
+        }
+
+        public void UpdateClothing()
+        {
+            if (myLegsSprite != null)
+            {
+                myLegsSprite.SetTexture(myCostume["legs"]);
+            }
+            else
+            {
+                myLegsSprite = new Otter.Spritemap<string>(myCostume["legs"], 32, 32);
+                myLegsSprite.Add("idle", new Otter.Anim(new int[] { 0 }, new float[] { 60f }));
+                myLegsSprite.Add("run", new Otter.Anim(new int[] { 0, 1, 2, 3, 4, 5 }, new float[] { 6f, 6f, 6f, 6f, 6f, 6f }));
+                myLegsSprite.Add("dead", new Otter.Anim(new int[] { 6 }, new float[] { 60f }));
+                myLegsSprite.CenterOrigin();
+                AddGraphic(myLegsSprite);
+            }
+
+            if (myTorsoSprite != null)
+            {
+                myTorsoSprite.SetTexture(myCostume["torso"]);
+            }
+            else
+            {
+                myTorsoSprite = new Otter.Spritemap<string>(myCostume["torso"], 32, 32);
+                myTorsoSprite.Add("idle", new Otter.Anim(new int[] { 0 }, new float[] { 60f }));
+                myTorsoSprite.Add("run", new Otter.Anim(new int[] { 0, 1, 2, 3, 4, 5 }, new float[] { 6f, 6f, 6f, 6f, 6f, 6f }));
+                myTorsoSprite.Add("dead", new Otter.Anim(new int[] { 6 }, new float[] { 60f }));
+                myTorsoSprite.CenterOrigin();
+                AddGraphic(myTorsoSprite);
+            }
+
+            if (myArmsSprite != null)
+            {
+                myArmsSprite.SetTexture(myCostume["arms"]);
+            }
+            else
+            {
+                myArmsSprite = new Otter.Spritemap<string>(myCostume["arms"], 32, 32);
+                myArmsSprite.Add("idle", new Otter.Anim(new int[] { 0 }, new float[] { 60f }));
+                myArmsSprite.Add("run", new Otter.Anim(new int[] { 0, 1, 2, 3, 4, 5 }, new float[] { 6f, 6f, 6f, 6f, 6f, 6f }));
+                myArmsSprite.Add("dead", new Otter.Anim(new int[] { 6 }, new float[] { 60f }));
+                myArmsSprite.CenterOrigin();
+                AddGraphic(myArmsSprite);
+            }
+
+            if (myHeadSprite != null)
+            {
+                myHeadSprite.SetTexture(myCostume["head"]);
+            }
+            else
+            {
+                myHeadSprite = new Otter.Spritemap<string>(myCostume["head"], 32, 32);
+                myHeadSprite.Add("idle", new Otter.Anim(new int[] { 0 }, new float[] { 60f }));
+                myHeadSprite.Add("run", new Otter.Anim(new int[] { 0, 1, 2, 3, 4, 5 }, new float[] { 6f, 6f, 6f, 6f, 6f, 6f }));
+                myHeadSprite.Add("dead", new Otter.Anim(new int[] { 6 }, new float[] { 60f }));
+                myHeadSprite.CenterOrigin();
+                AddGraphic(myHeadSprite);
+            }
         }
 
         public override void Update()
@@ -64,6 +132,29 @@ namespace SpaceQuestionmark.Entities
             base.Update();
 
             // Move about a bit
+
+            if (Global.controllerPlayerOne.RightStick.Position.Length > 0.1f)
+            {
+                myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
+                myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
+                myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
+                myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
+            }
+
+            if(Global.controllerPlayerOne.LeftStick.Position.Length > 0.1f)
+            {
+                myLegsSprite.Play("run", false);
+                myArmsSprite.Play("run", false);
+                myHeadSprite.Play("run", false);
+                myTorsoSprite.Play("run", false);
+            }
+            else
+            {
+                myLegsSprite.Play("idle", false);
+                myArmsSprite.Play("idle", false);
+                myHeadSprite.Play("idle", false);
+                myTorsoSprite.Play("idle", false);
+            }
         }
 
         public string GetDescription()

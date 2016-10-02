@@ -35,6 +35,17 @@ namespace SpaceQuestionmark
         public static string GFX_AIRLOCKH = "../../Assets/airlock2.png";
         public static string GFX_AIRLOCKV = "../../Assets/airlock.png";
         public static string GFX_FIRE = "../../Assets/fire.png";
+
+
+        // Player Clothing
+        public static Dictionary<string, string> GFX_PLAYER_DEBUG_COSTUME = new Dictionary<string, string>
+        {
+            { "torso", "../../Assets/player/debug_torso.png" },
+            { "head", "../../Assets/player/debug_head.png" },
+            { "arms", "../../Assets/player/debug_arms.png" },
+            { "legs", "../../Assets/player/debug_legs.png" }
+        };
+
         /*
         public static string SPRITE_TEST = "Assets/test.png";
         public static string GFX_STARFIELD = "Assets/starfield.png";

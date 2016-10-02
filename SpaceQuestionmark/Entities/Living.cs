@@ -25,7 +25,6 @@ namespace SpaceQuestionmark.Entities
         public Living()
         {
             myBody.Owner = this;
-            myBody.AddBodypart(new Systems.Body.Bodypart(), 1.0f);
         }
 
         public override void Update()

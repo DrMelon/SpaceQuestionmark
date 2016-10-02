@@ -13,9 +13,14 @@ namespace SpaceQuestionmark
         // Vars
         Entity newTest = new Entity(0, 0, new Image(Assets.SPRITE_TEST));
 
+        Entities.Human thePlayer = new Entities.Human();
+        
+
         public PlayState()
         {
-            
+            thePlayer.AddComponent(new Components.MobMovement());
+            thePlayer.GetComponent<Components.MobMovement>().myController = Global.controllerPlayerOne;
+            Add(thePlayer);
         }
 
 

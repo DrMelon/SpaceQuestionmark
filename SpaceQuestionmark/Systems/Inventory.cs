@@ -7,7 +7,7 @@ using Otter;
 
 namespace SpaceQuestionmark.Systems
 {
-    class Inventory
+    public class Inventory
     {
         public Dictionary<int, Entities.Item> mySlots;
         public int maxSlots = 10;
