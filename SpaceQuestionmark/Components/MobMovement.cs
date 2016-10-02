@@ -72,6 +72,15 @@ namespace SpaceQuestionmark.Components
             {
                 myAcceleration.Y = 0.0f;
             }
+
+            if(myController.LB.Down && (currentMoveType == MoveType.RUN || currentMoveType == MoveType.WALK))
+            {
+                currentMoveType = MoveType.RUN;
+            }
+            else if (currentMoveType == MoveType.RUN)
+            {
+                currentMoveType = MoveType.WALK;
+            }
         }
 
         public override void Update()
@@ -149,7 +158,6 @@ namespace SpaceQuestionmark.Components
                     myMotion.Y *= alterFriction;
                 }
 
-
             }
 
             while(myEnt.IsCollideWith<Entities.Wall>(myVelocity.X, myVelocity.Y, (int)Global.GetColliderTagForType<Entities.Wall>()))
@@ -160,6 +168,12 @@ namespace SpaceQuestionmark.Components
 
             myEnt.X += myVelocity.X;
             myEnt.Y += myVelocity.Y;
+
+            if(!myEnt.IsCollideWith<Entities.Floor>(0, 0, (int)Global.GetColliderTagForType<Entities.Floor>()))
+            {
+                currentMoveType = MoveType.FALL;
+            }
+
         }
     }
 }
