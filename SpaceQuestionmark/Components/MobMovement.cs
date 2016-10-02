@@ -28,8 +28,8 @@ namespace SpaceQuestionmark.Components
         public Speed myMotion = new Speed(1200);
         public Speed myVelocity = new Speed(1200);
 
-        public float walkSpeed = 3;
-        public float runSpeed = 12;
+        public float walkSpeed = 20;
+        public float runSpeed = 40;
         public float slideSpeed = 60;
         public float fallSpeed = 120;
         public float boostSpeed = 120;
@@ -55,32 +55,36 @@ namespace SpaceQuestionmark.Components
 
         public void HandleInput(float dt)
         {
-            if (Math.Abs(myController.LeftStick.X) > 0.1f)
-            {
-                myAcceleration.X = myController.LeftStick.X * 320;
-            }
-            else
-            {
-                myAcceleration.X = 0.0f;
-            }
-
-            if (Math.Abs(myController.LeftStick.Y) > 0.1f)
-            {
-                myAcceleration.Y= myController.LeftStick.Y * 320;
-            }
-            else
-            {
-                myAcceleration.Y = 0.0f;
-            }
-
-            if(myController.LB.Down && (currentMoveType == MoveType.RUN || currentMoveType == MoveType.WALK))
+            float mvSpd = walkSpeed;
+            
+            if (myController.LB.Down && (currentMoveType == MoveType.RUN || currentMoveType == MoveType.WALK))
             {
                 currentMoveType = MoveType.RUN;
+                mvSpd = runSpeed;
             }
             else if (currentMoveType == MoveType.RUN)
             {
                 currentMoveType = MoveType.WALK;
             }
+
+            if (Math.Abs(myController.LeftStick.X) > 0.1f)
+            {
+                myMotion.X = myController.LeftStick.X * mvSpd;
+            }
+            else
+            {
+                myMotion.X = 0.0f;
+            }
+
+            if (Math.Abs(myController.LeftStick.Y) > 0.1f)
+            {
+                myMotion.Y = myController.LeftStick.Y * mvSpd;
+            }
+            else
+            {
+                myMotion.Y = 0.0f;
+            }
+
         }
 
         public override void Update()
@@ -113,11 +117,8 @@ namespace SpaceQuestionmark.Components
 
             HandleInput(dt);
 
-            myMotion.X += myAcceleration.X * dt;
-            myMotion.Y += myAcceleration.Y * dt;
-
-            myVelocity.X = myMotion.X * Math.Abs(myController.LeftStick.X);
-            myVelocity.Y = myMotion.Y * Math.Abs(myController.LeftStick.Y);
+            myVelocity.X += myMotion.X * dt;
+            myVelocity.Y += myMotion.Y * dt;
 
             if (Math.Abs(myAcceleration.X) < 0.1f || Math.Abs(myAcceleration.Y) < 0.1f)
             {
@@ -151,11 +152,11 @@ namespace SpaceQuestionmark.Components
 
                 if(Math.Abs(myAcceleration.X) < 0.01f)
                 {
-                    myMotion.X *= alterFriction;
+                    myVelocity.X *= alterFriction;
                 }
                 if (Math.Abs(myAcceleration.Y) < 0.01f)
                 {
-                    myMotion.Y *= alterFriction;
+                    myVelocity.Y *= alterFriction;
                 }
 
             }
@@ -171,7 +172,7 @@ namespace SpaceQuestionmark.Components
 
             if(!myEnt.IsCollideWith<Entities.Floor>(0, 0, (int)Global.GetColliderTagForType<Entities.Floor>()))
             {
-                currentMoveType = MoveType.FALL;
+                //currentMoveType = MoveType.FALL;
             }
 
         }

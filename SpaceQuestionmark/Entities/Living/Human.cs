@@ -135,10 +135,20 @@ namespace SpaceQuestionmark.Entities
 
             if (Global.controllerPlayerOne.RightStick.Position.Length > 0.1f)
             {
-                myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
-                myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
-                myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
-                myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X) - 90);
+                myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+            }
+            else
+            {
+                if (Global.controllerPlayerOne.LeftStick.Position.Length > 0.1f)
+                {
+                    myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                    myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                    myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                    myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                }
             }
 
             if(Global.controllerPlayerOne.LeftStick.Position.Length > 0.1f)
