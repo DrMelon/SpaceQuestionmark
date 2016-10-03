@@ -55,7 +55,8 @@ namespace SpaceQuestionmark
 
         public void ResetGame()
         {
-          
+            Otter.Tilemap geg;
+            
         }
 
         public override void UpdateLast()

@@ -41,7 +41,7 @@ namespace SpaceQuestionmark.Entities
 
         public void CycleRenderables(int x, int y)
         {
-            if(x == curRenderX && y == curRenderY)
+            if(Math.Abs(x - curRenderX) < 16 && Math.Abs(x - curRenderX) < 16)
             {
                 return;
             }
