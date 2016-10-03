@@ -176,7 +176,11 @@ namespace SpaceQuestionmark.Components
 
             if(!myEnt.IsCollideWith<Entities.Floor>(0, 0, (int)Global.GetColliderTagForType<Entities.Floor>()))
             {
-                //currentMoveType = MoveType.FALL;
+                currentMoveType = MoveType.FALL;
+            }
+            else if(currentMoveType != MoveType.WALK && currentMoveType != MoveType.RUN)
+            {
+                currentMoveType = MoveType.WALK;
             }
 
         }

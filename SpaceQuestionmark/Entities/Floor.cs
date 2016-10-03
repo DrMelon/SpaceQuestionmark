@@ -21,30 +21,15 @@ namespace SpaceQuestionmark.Entities
         public String myName = "Perfectly Generic Floor";
         public String myDescription = "This is a Perfectly Generic Floor, and it's Perfectly Boring! Wow!";
         public const int FLOOR_TILE_SIZE = 64;
-        public Managers.FloorMaster myFloorMaster; // all hail the mighty FLOORMASTER, that manages all the floors.
         public int myTileX, myTileY;
+        public bool markRemove = false;
 
-        public Floor(int tileX, int tileY, Managers.FloorMaster floormaster)
+        public Floor(int tileX, int tileY)
         {
             // Register us in the Book of Floors, it handles rendering and stuff for us, but maintains a ref to us so that we can
             // do special logic. 
-            myTileX = tileX;
-            myTileY = tileY;
-
-            myFloorMaster = floormaster;
-        }
-
-        public void AddSelfToFloorMaster()
-        {
-            if(myFloorMaster.GetTile(myTileX, myTileY) == null)
-            {
-                myFloorMaster.AddFloorTile(this, myTileX, myTileY);
-            }
-            else
-            {
-                Util.Log("Can't add a tile that already exists, bruh");
-            }
-            
+            myTileX = tileX / 64;
+            myTileY = tileY / 64;
         }
 
     }

@@ -27,7 +27,7 @@ namespace SpaceQuestionmark
         public static string GFX_EXTINGUISHER = "../../Assets/extinguisher.png";
         public static string GFX_HAND = "../../Assets/hand.png";
         public static string GFX_O2TANK = "../../Assets/o2.png";
-        public static string GFX_TILE = "../../Assets/tile.png";
+        public static string GFX_TILE = "../../Assets/tiles/floor_panel.png";
         public static string GFX_CRISPS = "../../Assets/wongers.png";
         public static string GFX_WRENCH = "../../Assets/wrench.png";
         public static string GFX_MACHINETOP = "../../Assets/machinefromabove.png";
