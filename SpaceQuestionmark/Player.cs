@@ -93,7 +93,7 @@ namespace SpaceQuestionmark
             o2tank = new Image(Assets.GFX_O2TANK);
             fireextinguisher = new Image(Assets.GFX_EXTINGUISHER);
             battery = new Image(Assets.GFX_BATTERY);
-            tiles = new Image(Assets.GFX_TILE);
+          //  tiles = new Image(Assets.GFX_TILE);
 
             StartInspect = Global.theGame.Timer;
 

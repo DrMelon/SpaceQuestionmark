@@ -52,7 +52,6 @@
     <Compile Include="Entities\Living.cs" />
     <Compile Include="Entities\Living\Human.cs" />
     <Compile Include="Entities\Machine.cs" />
-    <Compile Include="Entities\Map.cs" />
     <Compile Include="Entities\Wall.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Player.cs" />

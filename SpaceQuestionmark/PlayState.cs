@@ -11,7 +11,13 @@ namespace SpaceQuestionmark
     class PlayState : Scene
     {
         // Vars
-        Entities.Map theMap;
+        // Entities.Map theMap;
+        Tilemap floorMap;
+        GridCollider floorCol;
+        Tilemap wallMap;
+        GridCollider wallCol;
+        Entities.Floor map;
+
         Entities.Human thePlayer;
         Entity cameraFocus = new Entity();
         
@@ -22,10 +28,29 @@ namespace SpaceQuestionmark
 
 
             // Map
-            theMap = new Entities.Map(250, 250);
-            Add(theMap);
+            map = new Entities.Floor();
+            floorMap = new Tilemap(Assets.GFX_FLOORTILES, 256 * 64, 64);
+            floorCol = new GridCollider(256 * 64, 256 * 64, 64, 64, (int)Global.ColliderTags.FLOOR);
+            wallMap = new Tilemap(Assets.GFX_WALLTILES, 256 * 64, 64);
+            wallCol = new GridCollider(256 * 64, 256 * 64, 64, 64, (int)Global.ColliderTags.WALL);
+            map.AddGraphic(floorMap);
+            map.AddCollider(floorCol);
+            map.AddGraphic(wallMap);
+            map.AddCollider(wallCol);
 
+            // map gen??
+            for(int i = 0; i < 256; i++)
+            {
+                for(int j = 0; j < 256; j++)
+                {
+                    floorMap.SetTile(i, j, 2, "");
+                    floorCol.SetTile(i, j, true);
+                }
+            }
 
+            Add(map);
+            
+            
             // Player (part of map?)
             thePlayer = new Entities.Human();
             thePlayer.AddComponent(new Components.MobMovement());
@@ -35,8 +60,7 @@ namespace SpaceQuestionmark
             thePlayer.Collider.CenterOrigin();
             
             Add(thePlayer);
-
-
+            
             // Scene Stuff
             ApplyCamera = true;
             CameraFocus = cameraFocus;
@@ -49,13 +73,11 @@ namespace SpaceQuestionmark
         {
             base.Update();
 
-            theMap.CycleRenderables((int)Util.Round(cameraFocus.X / 64.0f), (int)Util.Round(cameraFocus.X / 64.0f));
-            theMap.RemoveMarked();
         }
 
         public void ResetGame()
         {
-            Otter.Tilemap geg;
+
             
         }
 

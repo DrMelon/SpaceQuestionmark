@@ -24,12 +24,9 @@ namespace SpaceQuestionmark.Entities
         public int myTileX, myTileY;
         public bool markRemove = false;
 
-        public Floor(int tileX, int tileY)
+        public Floor()
         {
-            // Register us in the Book of Floors, it handles rendering and stuff for us, but maintains a ref to us so that we can
-            // do special logic. 
-            myTileX = tileX / 64;
-            myTileY = tileY / 64;
+
         }
 
     }
