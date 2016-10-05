@@ -54,7 +54,6 @@
     <Compile Include="Entities\Machine.cs" />
     <Compile Include="Entities\Wall.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="PlayState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

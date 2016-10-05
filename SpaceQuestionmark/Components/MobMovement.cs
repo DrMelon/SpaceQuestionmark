@@ -51,6 +51,8 @@ namespace SpaceQuestionmark.Components
 
             myEnt = Entity as Entities.EntityEx;
             myVelocity.HardClamp = true;
+
+            
         }
 
         public void HandleInput(float dt)
@@ -165,10 +167,34 @@ namespace SpaceQuestionmark.Components
 
             }
 
-            while(myEnt.IsCollideWith<Entities.Wall>(myVelocity.X, myVelocity.Y, (int)Global.GetColliderTagForType<Entities.Wall>()))
+            if(myEnt.IsCollideWith<Entities.Floor>(myVelocity.X, myVelocity.Y, (int)Global.GetColliderTagForType<Entities.Wall>()))
             {
-                myVelocity.X *= 0.5f;
-                myVelocity.Y *= 0.5f;
+                if (currentMoveType != MoveType.FALL)
+                {
+                    if (myEnt.IsCollideWith<Entities.Floor>(myVelocity.X, 0, (int)Global.GetColliderTagForType<Entities.Wall>()))
+                    {
+                        myVelocity.X = 0.0f;
+                    }
+                    if (myEnt.IsCollideWith<Entities.Floor>(0, myVelocity.Y, (int)Global.GetColliderTagForType<Entities.Wall>()))
+                    {
+                        myVelocity.Y = 0.0f;
+                    }
+                }
+                else
+                {
+                    // Do grip check. If grip, halt veloc and walk a little.
+
+
+                    // If no grip, bounce off of the structure (and take damage?)
+                    if (myEnt.IsCollideWith<Entities.Floor>(myVelocity.X, 0, (int)Global.GetColliderTagForType<Entities.Wall>()))
+                    {
+                        myVelocity.X *= -0.96f;
+                    }
+                    if (myEnt.IsCollideWith<Entities.Floor>(0, myVelocity.Y, (int)Global.GetColliderTagForType<Entities.Wall>()))
+                    {
+                        myVelocity.Y *= -0.96f;
+                    }
+                }
             }
 
             myEnt.X += myVelocity.X;
@@ -183,6 +209,27 @@ namespace SpaceQuestionmark.Components
                 currentMoveType = MoveType.WALK;
             }
 
+        }
+
+        public override void Render()
+        {
+            base.Render();
+
+            if(Global.debugMode)
+            {
+                // Render Sticks.
+
+                // LS
+                Draw.Circle(myEnt.X - 60, myEnt.Y + 60, 32, Color.None, Color.Custom("FaintBlue"), 1);
+                Draw.Circle(myEnt.X - 60 + (32 * myController.LeftStick.X), myEnt.Y + 60 + (32 * myController.LeftStick.Y), 8, Color.None, Color.Custom("FaintYellow"), 1);
+
+                // RS
+                Draw.Circle(myEnt.X + 60, myEnt.Y + 60, 32, Color.None, Color.Custom("FaintBlue"), 1);
+                Draw.Circle(myEnt.X + 60 + (32 * myController.RightStick.X), myEnt.Y + 60 + (32 * myController.RightStick.Y), 8, Color.None, Color.Custom("FaintYellow"), 1);
+
+                // A B X Y
+                Draw.Circle(myEnt.X + 80, myEnt.Y + 30, 32, myController.X.Down? Color.None : Color.Custom("FaintBlue"), Color.Custom("FaintBlue"), 1);
+            }
         }
     }
 }

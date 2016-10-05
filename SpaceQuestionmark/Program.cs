@@ -27,10 +27,19 @@ namespace SpaceQuestionmark
             // throw/hit
             Global.controllerPlayerOne.B.AddMouseButton(Otter.MouseButton.Right);
 
+            // Create Colours
+            Color.AddCustom(new Color(1.0f, 0.0f, 0.0f, 0.66f), "FaintRed");
+            Color.AddCustom(new Color(0.0f, 1.0f, 0.0f, 0.66f), "FaintGreen");
+            Color.AddCustom(new Color(0.0f, 0.0f, 1.0f, 0.66f), "FaintBlue");
+            Color.AddCustom(new Color(0.0f, 1.0f, 1.0f, 0.66f), "FaintCyan");
+            Color.AddCustom(new Color(1.0f, 0.0f, 1.0f, 0.66f), "FaintMagenta");
+            Color.AddCustom(new Color(1.0f, 1.0f, 0.0f, 0.66f), "FaintYellow");
 
             Global.theGame.AddScene(new PlayState());
             Global.theGame.LockMouseCenter = true;
             Global.theGame.Start();
+
+            
         }
     }
 }

@@ -50,7 +50,7 @@ namespace SpaceQuestionmark.Entities
         
         public bool IsBounceCollide(float dx, float dy)
         {
-            return (IsCollideWith<Wall>(dx, dy, (int)Global.GetColliderTagForType<Wall>()) || 
+            return (IsCollideWith<Floor>(dx, dy, (int)Global.GetColliderTagForType<Wall>()) || 
                     IsCollideWith<Machine>(dx, dy, (int)Global.GetColliderTagForType<Machine>()) ||
                     IsCollideWith<Living>(dx, dy, (int)Global.GetColliderTagForType<Living>()));
         }
