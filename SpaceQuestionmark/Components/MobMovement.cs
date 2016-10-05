@@ -124,6 +124,12 @@ namespace SpaceQuestionmark.Components
                 {
                     HandleInput(dt);
                 }
+                else
+                {
+                    myMotion.X = 0;
+                    myMotion.Y = 0;
+                }
+
             }
             else
             {

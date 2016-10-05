@@ -41,12 +41,11 @@ namespace SpaceQuestionmark.Systems.Body
                     maxVitality += 100.0f * kvp.Value;
                 }
 
-                runningVitalityTotal += thisVitality;
-                maxVitality += 100.0f;
-
                 float overallVitality = runningVitalityTotal / maxVitality;
 
-                return overallVitality * 100.0f;
+                overallVitality *= thisVitality;
+
+                return overallVitality;
             }
             else
             {
@@ -61,14 +60,12 @@ namespace SpaceQuestionmark.Systems.Body
                 foreach (KeyValuePair<Bodypart, float> kvp in myBodyParts)
                 {
                     kvp.Key.Hurt(amt * kvp.Value);
-                    Global.DebugLog(myName + " Hurt: " + amt.ToString() + " ::: " + thisVitality.ToString() + " left");
                 }
             }
 
             if(thisVitality > 0)
             {
                 thisVitality -= amt;
-                Global.DebugLog(myName + " Hurt: " + amt.ToString() + " ::: " + thisVitality.ToString() + " left");
             }
             if(thisVitality < 0)
             {

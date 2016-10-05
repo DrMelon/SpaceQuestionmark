@@ -29,6 +29,9 @@ namespace SpaceQuestionmark
         Image starFieldMid;
         Image starFieldClose;
 
+        float camShake = 0.0f;
+        float camShakeMag = 0.0f;
+
         public PlayState()
         {
             // Create Entities:
@@ -131,7 +134,9 @@ namespace SpaceQuestionmark
 
             if(Global.controllerPlayerOne.Back.Pressed)
             {
-                thePlayer.Lungs.Hurt(10);
+                thePlayer.Lungs.Hurt(90);
+                ShakeCamera(1.0f, 50.0f);
+                map.WallClearTile(map.playerStartX + 2, map.playerStartY);
             }
             if (Global.controllerPlayerOne.Start.Pressed)
             {
@@ -174,6 +179,17 @@ namespace SpaceQuestionmark
 
             cameraFocus.X = Util.Lerp(thePlayer.X, thePlayer.X, 0.5f);
             cameraFocus.Y = Util.Lerp(thePlayer.Y, thePlayer.Y, 0.5f);
+            
+            if(camShake > 0.0f)
+            {
+                camShake -= Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK);
+
+                camShakeMag = Util.Lerp(camShakeMag, 0.0f, camShakeMag * 0.01f);
+
+                cameraFocus.X += Rand.Float(-camShakeMag, camShakeMag);
+                cameraFocus.Y += Rand.Float(-camShakeMag, camShakeMag);
+            }
+
             //CameraZoom = 1.5f + (float)Math.Sin(Game.Instance.Timer * 0.001f);
             //CameraZoom = 2.0f;
             //CameraAngle = (float)Math.Sin(Game.Instance.Timer * 0.002f);
@@ -190,6 +206,13 @@ namespace SpaceQuestionmark
                 Draw.Circle(thePlayer.X, thePlayer.Y, 8, Color.None, Color.Custom("FaintRed"), 1);
             }
         }
+
+        public void ShakeCamera(float shk, float mag)
+        {
+            camShake = shk;
+            camShakeMag = mag;
+        }
+
          
 
     }

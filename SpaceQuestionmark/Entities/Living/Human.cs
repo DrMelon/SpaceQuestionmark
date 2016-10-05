@@ -138,39 +138,40 @@ namespace SpaceQuestionmark.Entities
             // Do body stuff. gross
             myBody.CalculateVitality();
 
-            if(!CanBreathe())
-            {
-                // Can't hold breath for that long..!
-                Lungs.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.25f);
-            }
-
-            if(Lungs.GetVitality() < 10)
-            {
-                // Lungs are dead. Can't live long like this!
-                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.5f);
-            }
-
-            if (Heart.GetVitality() < 10)
-            {
-                // Heart is dead. Can't live long like this!
-                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.5f);
-            }
-
-            if (Guts.GetVitality() < 10)
-            {
-                // Guts are dead. Can't live long like this!
-                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.5f);
-            }
-
-            if (Brain.GetVitality() < 10)
-            {
-                // Brain is dead. We're pretty much insta-dead.
-                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 5.0f);
-            }
-
-            // Move about a bit
             if (!myBody.dead)
             {
+                if (!CanBreathe())
+                {
+                    // Can't hold breath for that long..!
+                    Lungs.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 2.5f);
+                }
+
+                if(Lungs.GetVitality() < 10)
+                {
+                    // Lungs are dead. Can't live long like this!
+                    Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 5.0f);
+                }
+
+                if (Heart.GetVitality() < 10)
+                {
+                    // Heart is dead. Can't live long like this!
+                    Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 5.0f);
+                }
+
+                if (Guts.GetVitality() < 10)
+                {
+                    // Guts are dead. Can't live long like this!
+                    Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 5.0f);
+                }
+
+                if (Brain.GetVitality() < 10)
+                {
+                    // Brain is dead. We're pretty much insta-dead.
+                    Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 50.0f);
+                }
+
+            // Move about a bit
+          
                 if (Global.controllerPlayerOne.RightStick.Position.Length > 0.1f)
                 {
                     myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
@@ -321,12 +322,12 @@ namespace SpaceQuestionmark.Entities
             LeftLeg.AddBodypart(LeftFoot, 0.5f);
             RightLeg.AddBodypart(RightFoot, 0.5f);
 
-            Torso.AddBodypart(Heart, 10.0f);
-            Torso.AddBodypart(Lungs, 10.0f);
-            Torso.AddBodypart(Guts, 10.0f);
+            Torso.AddBodypart(Heart, 0.3f);
+            Torso.AddBodypart(Lungs, 0.3f);
+            Torso.AddBodypart(Guts, 0.6f);
 
-            Head.AddBodypart(Eyes, 1.0f);
-            Head.AddBodypart(Brain, 50.0f);
+            Head.AddBodypart(Eyes, 0.6f);
+            Head.AddBodypart(Brain, 0.1f);
 
             myBody.AddBodypart(Torso, 1.0f);
 
