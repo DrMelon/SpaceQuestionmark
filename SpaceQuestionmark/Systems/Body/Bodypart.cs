@@ -61,12 +61,22 @@ namespace SpaceQuestionmark.Systems.Body
                 foreach (KeyValuePair<Bodypart, float> kvp in myBodyParts)
                 {
                     kvp.Key.Hurt(amt * kvp.Value);
+                    Global.DebugLog(myName + " Hurt: " + amt.ToString() + " ::: " + thisVitality.ToString() + " left");
                 }
             }
-            else
+
+            if(thisVitality > 0)
             {
                 thisVitality -= amt;
+                Global.DebugLog(myName + " Hurt: " + amt.ToString() + " ::: " + thisVitality.ToString() + " left");
             }
+            if(thisVitality < 0)
+            {
+                thisVitality = 0;
+            }
+            
+
+            
         }
 
         public void CheckBleed()

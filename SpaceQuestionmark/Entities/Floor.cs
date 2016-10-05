@@ -59,10 +59,13 @@ namespace SpaceQuestionmark.Entities
 
             // Make a lil starting pod room around the player here.
             FloorFillRect(playerStartX - 3, playerStartY - 3, 6, 6, 2);
-            WallFillRect(playerStartX - 4, playerStartY - 4, 8, 1, 1);
-            WallFillRect(playerStartX - 4, playerStartY - 4, 1, 8, 1);
-            WallFillRect(playerStartX + 4, playerStartY - 4, 1, 8, 1);
-            WallFillRect(playerStartX - 4, playerStartY + 4, 8, 1, 1);
+            WallLineRect(playerStartX - 4, playerStartY - 4, 8, 8, 1);
+
+        }
+
+        public void MakeRoom()
+        {
+
         }
 
 
@@ -119,6 +122,20 @@ namespace SpaceQuestionmark.Entities
                 for (int j = y; j < y + h; j++)
                 {
                     WallFillTile(i, j, tileID);
+                }
+            }
+        }
+
+        public void WallLineRect(int x, int y, int w, int h, int tileID)
+        {
+            for (int i = x; i < x + w; i++)
+            {
+                for (int j = y; j < y + h; j++)
+                {
+                    if (i == x || i == x + w - 1 || j == y || j == y + h - 1)
+                    {
+                        WallFillTile(i, j, tileID);
+                    }
                 }
             }
         }

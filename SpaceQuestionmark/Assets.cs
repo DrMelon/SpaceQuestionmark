@@ -36,6 +36,8 @@ namespace SpaceQuestionmark
         public static string GFX_AIRLOCKH = "../../Assets/airlock2.png";
         public static string GFX_AIRLOCKV = "../../Assets/airlock.png";
         public static string GFX_FIRE = "../../Assets/fire.png";
+        public static string GFX_HP_METER = "../../Assets/hpmeter.png";
+        public static string GFX_O2_METER = "../../Assets/o2meter.png";
 
 
         // Player Clothing

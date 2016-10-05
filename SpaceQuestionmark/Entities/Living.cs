@@ -21,6 +21,7 @@ namespace SpaceQuestionmark.Entities
         public string myDescription = "It's alive!";
 
         public Systems.Body.Body myBody = new Systems.Body.Body();
+        public bool IsAlive = true;
 
         public Living()
         {
@@ -37,11 +38,12 @@ namespace SpaceQuestionmark.Entities
             }
         }
 
-        public void Die()
+        public virtual void Die()
         {
             //erk
             myName = "Dead Creature";
             myDescription = "It's dead!";
+            IsAlive = false;
         }
     }
 }

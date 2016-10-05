@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 // A Body
 // An Inventory
 // A Reagent Container
+// An Atmospherics Processor
 
 // they can Move, Use things, Equip things, etc
 
@@ -54,6 +55,9 @@ namespace SpaceQuestionmark.Entities
 
         // Reagent container yooo
         public Systems.Chemistry.ReagentContainer myReagentContainer;
+
+        // Atmospherics!!
+        
 
         public Human()
         {
@@ -131,39 +135,74 @@ namespace SpaceQuestionmark.Entities
         {
             base.Update();
 
-            // Move about a bit
+            // Do body stuff. gross
+            myBody.CalculateVitality();
 
-            if (Global.controllerPlayerOne.RightStick.Position.Length > 0.1f)
+            if(!CanBreathe())
             {
-                myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
-                myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
-                myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
-                myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                // Can't hold breath for that long..!
+                Lungs.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.25f);
             }
-            else
+
+            if(Lungs.GetVitality() < 10)
             {
+                // Lungs are dead. Can't live long like this!
+                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.5f);
+            }
+
+            if (Heart.GetVitality() < 10)
+            {
+                // Heart is dead. Can't live long like this!
+                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.5f);
+            }
+
+            if (Guts.GetVitality() < 10)
+            {
+                // Guts are dead. Can't live long like this!
+                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.5f);
+            }
+
+            if (Brain.GetVitality() < 10)
+            {
+                // Brain is dead. We're pretty much insta-dead.
+                Torso.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 5.0f);
+            }
+
+            // Move about a bit
+            if (!myBody.dead)
+            {
+                if (Global.controllerPlayerOne.RightStick.Position.Length > 0.1f)
+                {
+                    myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                    myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                    myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                    myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.RightStick.Position.Y, Global.controllerPlayerOne.RightStick.Position.X)) - 90;
+                }
+                else
+                {
+                    if (Global.controllerPlayerOne.LeftStick.Position.Length > 0.1f)
+                    {
+                        myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                        myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                        myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                        myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                    }
+                }
+
                 if (Global.controllerPlayerOne.LeftStick.Position.Length > 0.1f)
                 {
-                    myLegsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
-                    myArmsSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
-                    myHeadSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
-                    myTorsoSprite.Angle = Otter.MathHelper.ToDegrees((float)Math.Atan2(-Global.controllerPlayerOne.LeftStick.Position.Y, Global.controllerPlayerOne.LeftStick.Position.X)) - 90;
+                    myLegsSprite.Play("run", false);
+                    myArmsSprite.Play("run", false);
+                    myHeadSprite.Play("run", false);
+                    myTorsoSprite.Play("run", false);
                 }
-            }
-
-            if(Global.controllerPlayerOne.LeftStick.Position.Length > 0.1f)
-            {
-                myLegsSprite.Play("run", false);
-                myArmsSprite.Play("run", false);
-                myHeadSprite.Play("run", false);
-                myTorsoSprite.Play("run", false);
-            }
-            else
-            {
-                myLegsSprite.Play("idle", false);
-                myArmsSprite.Play("idle", false);
-                myHeadSprite.Play("idle", false);
-                myTorsoSprite.Play("idle", false);
+                else
+                {
+                    myLegsSprite.Play("idle", false);
+                    myArmsSprite.Play("idle", false);
+                    myHeadSprite.Play("idle", false);
+                    myTorsoSprite.Play("idle", false);
+                }
             }
         }
 
@@ -176,6 +215,12 @@ namespace SpaceQuestionmark.Entities
             // Get Inventory/Equip
 
             return description;
+        }
+
+        public bool CanBreathe()
+        {
+            // check atmos processing
+            return true && (Lungs.GetVitality() > 10);
         }
 
         public void SetUpBody()
@@ -276,12 +321,14 @@ namespace SpaceQuestionmark.Entities
             LeftLeg.AddBodypart(LeftFoot, 0.5f);
             RightLeg.AddBodypart(RightFoot, 0.5f);
 
-            Torso.AddBodypart(Heart, 1.0f);
-            Torso.AddBodypart(Lungs, 1.0f);
-            Torso.AddBodypart(Guts, 1.0f);
+            Torso.AddBodypart(Heart, 10.0f);
+            Torso.AddBodypart(Lungs, 10.0f);
+            Torso.AddBodypart(Guts, 10.0f);
 
             Head.AddBodypart(Eyes, 1.0f);
-            Head.AddBodypart(Brain, 5.0f);
+            Head.AddBodypart(Brain, 50.0f);
+
+            myBody.AddBodypart(Torso, 1.0f);
 
             // Define part abilities!
             LeftHand.canGrasp = true;
@@ -295,6 +342,15 @@ namespace SpaceQuestionmark.Entities
             RightFoot.canEquip = true;
 
             Head.canEquip = true;
+        }
+
+        public override void Die()
+        {
+            myLegsSprite.Play("dead", false);
+            myTorsoSprite.Play("dead", false);
+            myArmsSprite.Play("dead", false);
+            myHeadSprite.Play("dead", false);
+            IsAlive = false;
         }
     }
 }

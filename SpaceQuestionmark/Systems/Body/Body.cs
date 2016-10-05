@@ -18,7 +18,7 @@ namespace SpaceQuestionmark.Systems.Body
     public class Body
     {
         public Entities.EntityEx Owner = null;
-        public Dictionary<Bodypart, float> myBodyParts;
+        public Dictionary<Bodypart, float> myBodyParts = new Dictionary<Bodypart, float>();
 
         public float currentVitality = 100.0f;
         public float maxVitality = 100.0f;
@@ -46,6 +46,11 @@ namespace SpaceQuestionmark.Systems.Body
             float overallVitality = runningVitalityTotal / maxVitality;
 
             currentVitality = overallVitality * 100.0f;
+
+            if(currentVitality < 1.0f)
+            {
+                Die();
+            }
         }
 
         public void AddBodypart(Bodypart toadd, float weight)
