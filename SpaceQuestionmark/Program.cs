@@ -15,6 +15,7 @@ namespace SpaceQuestionmark
             
             Global.theGame = new Game("SPACE QUESTIONMARK", 1280/2, 800/2, 60, false);
             Global.theGame.SetWindowScale(2);
+            //Global.theGame.FixedFramerate = false;
 
             Global.thePlayerSession = Global.theGame.AddSession("PlayerOne");
             Global.thePlayerSession.Controller = new ControllerXbox360(0);

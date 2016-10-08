@@ -34,13 +34,18 @@ namespace SpaceQuestionmark.Systems.Atmospherics
         {
             if(Void)
             {
-                return 0;
+                return 0.0f;
             }
             float pressure = 0.0f;
 
             foreach(var kvp in PresentGases)
             {
                 pressure += kvp.Value;
+            }
+
+            if(float.IsInfinity(pressure))
+            {
+                Util.Log("Pressure FCKED UP");
             }
 
             return pressure;
@@ -52,8 +57,14 @@ namespace SpaceQuestionmark.Systems.Atmospherics
 
             float amtInMix = 0.0f;
 
-            if(PresentGases.TryGetValue(gasToCheck, out amtInMix))
+            if (GetPressure() <= 0.0f)
             {
+                return 0.0f;
+            }
+
+            if (PresentGases.TryGetValue(gasToCheck, out amtInMix))
+            {
+
                 gasAmt = amtInMix / GetPressure();
             }
 
@@ -76,7 +87,8 @@ namespace SpaceQuestionmark.Systems.Atmospherics
 
         public void ProcessNeighbourCells(float dt)
         {
-            float pressureMult = 10.0f;
+            dt *= 30.0f;
+            float pressureMult = 1.0f;
 
             // no neighbours
             if(numNeighbours < 1)
@@ -101,7 +113,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                         NorthNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                         AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
                     }
-                    GasMotion.Y -= pressureDiff / (pressureMult * 0.25f);
+                    GasMotion.Y -= pressureDiff;
                 }
                 if(Temperature > NorthNeighbour.Temperature)
                 {
@@ -122,7 +134,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                         WestNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                         AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
                     }
-                    GasMotion.X -= pressureDiff / (pressureMult * 0.25f);
+                    GasMotion.X -= pressureDiff;
                 }
                 if (Temperature > WestNeighbour.Temperature)
                 {
@@ -142,7 +154,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                         EastNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                         AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
                     }
-                    GasMotion.X += pressureDiff / (pressureMult * 0.25f);
+                    GasMotion.X += pressureDiff;
                 }
                 if (Temperature > EastNeighbour.Temperature)
                 {
@@ -162,7 +174,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                         SouthNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                         AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
                     }
-                    GasMotion.Y += pressureDiff / (pressureMult * 0.25f);
+                    GasMotion.Y += pressureDiff;
                 }
                 if(Temperature > SouthNeighbour.Temperature)
                 {

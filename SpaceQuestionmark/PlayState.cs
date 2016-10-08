@@ -146,8 +146,8 @@ namespace SpaceQuestionmark
                     gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.SouthNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.SouthNeighbour.GasMotion.Y * 1.0f, -15, 15));
                 }
 
-                thePlayer.GetComponent<Components.MobMovement>().myVelocity.X += gasVelocityMix.X * 2.5f;
-                thePlayer.GetComponent<Components.MobMovement>().myVelocity.Y += gasVelocityMix.Y * 2.5f;
+                thePlayer.GetComponent<Components.MobMovement>().myVelocity.X += gasVelocityMix.X * 320.0f * Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK);
+                thePlayer.GetComponent<Components.MobMovement>().myVelocity.Y += gasVelocityMix.Y * 320.0f * Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK);
 
             }
         }
