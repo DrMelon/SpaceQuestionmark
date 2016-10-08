@@ -57,7 +57,7 @@ namespace SpaceQuestionmark.Entities
         public Systems.Chemistry.ReagentContainer myReagentContainer;
 
         // Atmospherics!!
-        
+        public Systems.Atmospherics.GasMixture LungMixture = null;
 
         public Human()
         {
@@ -144,6 +144,8 @@ namespace SpaceQuestionmark.Entities
                 {
                     // Can't hold breath for that long..!
                     Lungs.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 2.5f);
+                    Heart.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 1.5f);
+                    Brain.Hurt(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK) * 0.5f);
                 }
 
                 if(Lungs.GetVitality() < 10)
@@ -221,7 +223,33 @@ namespace SpaceQuestionmark.Entities
         public bool CanBreathe()
         {
             // check atmos processing
-            return true && (Lungs.GetVitality() > 10);
+            if(LungMixture == null)
+            {
+                return false;
+            }
+
+            if(Lungs.GetVitality() <= 10)
+            {
+                return false;
+            }
+
+            if(LungMixture != null)
+            {
+                if(LungMixture.GetGasPercentage("Oxygen") < 0.15f)
+                {
+                    return false;
+                }
+                if(LungMixture.GetPressure() < 0.75f)
+                {
+                    return false;
+                }
+                if(LungMixture.GetGasPercentage("CO2") > 0.05f)
+                {
+                    return false;
+                }
+            }
+
+            return (LungMixture != null) && (Lungs.GetVitality() > 10);
         }
 
         public void SetUpBody()

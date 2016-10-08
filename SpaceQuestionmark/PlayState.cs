@@ -106,19 +106,27 @@ namespace SpaceQuestionmark
 
         }
 
-
-        // Funcs
-        public override void Update()
+        public void UpdateAtmosphericsInteractions()
         {
-            base.Update();
+            MoveItemsWithGasFlow();
+            MovePlayerWithGasFlow();
+            ProcessLivingWithAtmos();
+            
+        }
 
+        public void MovePlayerWithGasFlow()
+        {
+            if(Global.controllerPlayerOne.LB.Down)
+            {
+                return;
+            }
             // Push player along with gases
             Systems.Atmospherics.GasMixture gmAtPlayer = map.myGasManager.GetMixtureAt((int)(thePlayer.X) / 64, (int)(thePlayer.Y) / 64);
-            if(gmAtPlayer != null)
+            if (gmAtPlayer != null)
             {
                 Vector2 gasVelocityMix = new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.GasMotion.Y * 1.0f, -15, 15));
-                
-                if(gmAtPlayer.NorthNeighbour != null)
+
+                if (gmAtPlayer.NorthNeighbour != null)
                 {
                     gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.NorthNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.NorthNeighbour.GasMotion.Y * 1.0f, -15, 15));
                 }
@@ -138,11 +146,36 @@ namespace SpaceQuestionmark
                     gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.SouthNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.SouthNeighbour.GasMotion.Y * 1.0f, -15, 15));
                 }
 
-                thePlayer.GetComponent<Components.MobMovement>().myVelocity.X += gasVelocityMix.X;
-                thePlayer.GetComponent<Components.MobMovement>().myVelocity.Y += gasVelocityMix.Y;
+                thePlayer.GetComponent<Components.MobMovement>().myVelocity.X += gasVelocityMix.X * 2.5f;
+                thePlayer.GetComponent<Components.MobMovement>().myVelocity.Y += gasVelocityMix.Y * 2.5f;
 
             }
+        }
 
+        public void MoveItemsWithGasFlow()
+        {
+
+        }
+
+        public void ProcessLivingWithAtmos()
+        {
+            ProcessPlayerWithAtmos();
+        }
+
+        public void ProcessPlayerWithAtmos()
+        {
+            Systems.Atmospherics.GasMixture gmAtPlayer = map.myGasManager.GetMixtureAt((int)(thePlayer.X) / 64, (int)(thePlayer.Y) / 64);
+            thePlayer.LungMixture = gmAtPlayer;
+        }
+
+
+        // Funcs
+        public override void Update()
+        {
+            base.Update();
+
+
+            UpdateAtmosphericsInteractions();
            
            
 

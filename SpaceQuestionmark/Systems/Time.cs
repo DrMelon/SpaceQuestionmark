@@ -25,10 +25,10 @@ namespace SpaceQuestionmark.Systems
         }
 
         private static float deltaTimeDefaultScale = 1.0f;
-        private static float deltaTimeUIThinkScale = 1.0f;
-        private static float deltaTimeUIRenderScale = 1.0f;
-        private static float deltaTimeWorldThinkScale = 1.0f;
-        private static float deltaTimeWorldRenderScale = 1.0f;
+        public static float deltaTimeUIThinkScale = 1.0f;
+        public static float deltaTimeUIRenderScale = 1.0f;
+        public static float deltaTimeWorldThinkScale = 1.0f;
+        public static float deltaTimeWorldRenderScale = 1.0f;
 
         public static float GetDeltaTime(TimeGroup timeGroup = TimeGroup.DEFAULT)
         {

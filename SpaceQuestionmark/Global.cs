@@ -72,5 +72,11 @@ namespace SpaceQuestionmark
                 Util.Log(text);
             }
         }
+
+        [OtterCommand]
+        public static void SetTimeScale(float time)
+        {
+            Systems.Time.deltaTimeWorldThinkScale = time;
+        }
     }
 }

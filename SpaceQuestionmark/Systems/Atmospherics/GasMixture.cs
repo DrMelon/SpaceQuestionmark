@@ -34,7 +34,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
         {
             if(Void)
             {
-                return -10;
+                return 0;
             }
             float pressure = 0.0f;
 
@@ -76,7 +76,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
 
         public void ProcessNeighbourCells(float dt)
         {
-
+            dt *= 10.0f;
 
             // no neighbours
             if(numNeighbours < 1)
@@ -94,7 +94,8 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                 float northPressure = NorthNeighbour.GetPressure();
                 if (northPressure < CurrentPressure)
                 {
-                    float pressureDiff = ((CurrentPressure - northPressure) / (float)numNeighbours) / 2;
+                    float pressureDiff = ((CurrentPressure - northPressure));
+                    //pressureDiff *= pressureDiff * 10;
                     foreach (var kvp in PresentGases)
                     {
                         NorthNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key) * dt));
@@ -114,7 +115,8 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                 float westPressure = WestNeighbour.GetPressure();
                 if (westPressure < CurrentPressure)
                 {
-                    float pressureDiff = ((CurrentPressure - westPressure) / (float)numNeighbours) / 2;
+                    float pressureDiff = ((CurrentPressure - westPressure));
+                    //pressureDiff *= pressureDiff * 10;
                     foreach (var kvp in PresentGases)
                     {
                         WestNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key) * dt));
@@ -133,7 +135,8 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                 float eastPressure = EastNeighbour.GetPressure();
                 if (eastPressure < CurrentPressure)
                 {
-                    float pressureDiff = ((CurrentPressure - eastPressure) / (float)numNeighbours) / 2;
+                    float pressureDiff = ((CurrentPressure - eastPressure));
+                    //pressureDiff *= pressureDiff * 10;
                     foreach (var kvp in PresentGases)
                     {
                         EastNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key) * dt));
@@ -152,7 +155,8 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                 float southPressure = SouthNeighbour.GetPressure();
                 if (southPressure < CurrentPressure)
                 {
-                    float pressureDiff = ((CurrentPressure - southPressure) / (float)numNeighbours) / 2;
+                    float pressureDiff = ((CurrentPressure - southPressure));
+                    //pressureDiff *= pressureDiff * 10;
                     foreach (var kvp in PresentGases)
                     {
                         SouthNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key) * dt));
