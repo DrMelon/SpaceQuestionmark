@@ -62,7 +62,7 @@ namespace SpaceQuestionmark.Entities
             playerStartY = Rand.Int(10, 245);
 
             // Make a lil starting pod room around the player here.
-            MakeRoom(playerStartX, playerStartY, 6, 6, 2);
+            MakeRoom(playerStartX, playerStartY, 6, 80, 2);
 
             // Find borders to space and create negative pressure nodes
             FindSpaceTiles();

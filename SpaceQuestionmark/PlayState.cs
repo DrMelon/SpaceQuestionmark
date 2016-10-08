@@ -204,6 +204,10 @@ namespace SpaceQuestionmark
                 //thePlayer.Lungs.Hurt(90);
                 ShakeCamera(1.0f, 50.0f);
                 map.WallClearTile(map.playerStartX + 2, map.playerStartY);
+                map.WallClearTile(map.playerStartX + 2, map.playerStartY-1);
+                map.WallClearTile(map.playerStartX + 2, map.playerStartY+1);
+                map.WallClearTile(map.playerStartX + 2, map.playerStartY-2);
+                map.WallClearTile(map.playerStartX + 2, map.playerStartY+2);
                 map.NeedUpdateSpace = true;
             }
             if (Global.controllerPlayerOne.Start.Pressed)
