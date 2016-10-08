@@ -112,6 +112,40 @@ namespace SpaceQuestionmark
         {
             base.Update();
 
+            // Push player along with gases
+            Systems.Atmospherics.GasMixture gmAtPlayer = map.myGasManager.GetMixtureAt((int)(thePlayer.X) / 64, (int)(thePlayer.Y) / 64);
+            if(gmAtPlayer != null)
+            {
+                Vector2 gasVelocityMix = new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.GasMotion.Y * 1.0f, -15, 15));
+                
+                if(gmAtPlayer.NorthNeighbour != null)
+                {
+                    gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.NorthNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.NorthNeighbour.GasMotion.Y * 1.0f, -15, 15));
+                }
+
+                if (gmAtPlayer.EastNeighbour != null)
+                {
+                    gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.EastNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.EastNeighbour.GasMotion.Y * 1.0f, -15, 15));
+                }
+
+                if (gmAtPlayer.WestNeighbour != null)
+                {
+                    gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.WestNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.WestNeighbour.GasMotion.Y * 1.0f, -15, 15));
+                }
+
+                if (gmAtPlayer.SouthNeighbour != null)
+                {
+                    gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.SouthNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.SouthNeighbour.GasMotion.Y * 1.0f, -15, 15));
+                }
+
+                thePlayer.GetComponent<Components.MobMovement>().myVelocity.X += gasVelocityMix.X;
+                thePlayer.GetComponent<Components.MobMovement>().myVelocity.Y += gasVelocityMix.Y;
+
+            }
+
+           
+           
+
             if (Global.controllerPlayerOne.Y.Down && o2Meter.Alpha < 1.0f)
             {
                 o2Meter.Alpha += Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.UITHINK) * 5.0f;
@@ -134,9 +168,10 @@ namespace SpaceQuestionmark
 
             if(Global.controllerPlayerOne.Back.Pressed)
             {
-                thePlayer.Lungs.Hurt(90);
+                //thePlayer.Lungs.Hurt(90);
                 ShakeCamera(1.0f, 50.0f);
                 map.WallClearTile(map.playerStartX + 2, map.playerStartY);
+                map.NeedUpdateSpace = true;
             }
             if (Global.controllerPlayerOne.Start.Pressed)
             {

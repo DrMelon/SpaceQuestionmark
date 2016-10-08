@@ -1,4 +1,8 @@
-﻿using System;
+﻿//
+// @Author: J Brown (@DrMelon)
+// 2016
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +10,7 @@ using System.Threading.Tasks;
 using Otter;
 namespace SpaceQuestionmark
 {
+    // globals suck and are terrible but i'll use them anyway lmao
     public static class Global
     {
         public static Game theGame;

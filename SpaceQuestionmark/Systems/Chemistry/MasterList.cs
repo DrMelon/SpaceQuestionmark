@@ -1,4 +1,8 @@
-﻿using System;
+﻿//
+// @Author: J Brown (@DrMelon)
+// 2016
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
