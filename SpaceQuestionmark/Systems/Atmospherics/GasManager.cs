@@ -176,7 +176,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                 else
                 {
                     Draw.RoundedLine((getPos.X * 64) + 32, (getPos.Y * 64) + 32, ((getPos.X * 64) + 32) + gm.GasMotion.X * 1000, ((getPos.Y * 64) + 32) + gm.GasMotion.Y * 1000, Color.Red, 3);
-                    Draw.Circle((getPos.X * 64) + 32, (getPos.Y * 64) + 32, 4, Color.Green);
+                    Draw.Circle((getPos.X * 64) + 32, (getPos.Y * 64) + 32, 4, new Color(1.0f - gm.GetPressure(), gm.GetPressure(), 0.0f, 1.0f));
                 }
             }
         }

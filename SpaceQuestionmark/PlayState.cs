@@ -261,7 +261,10 @@ namespace SpaceQuestionmark
             //CameraZoom = 1.5f + (float)Math.Sin(Game.Instance.Timer * 0.001f);
             //CameraZoom = 2.0f;
             //CameraAngle = (float)Math.Sin(Game.Instance.Timer * 0.002f);
-
+            if(Input.KeyPressed(Key.PageUp))
+            {
+                Global.debugMode = true;
+            }
         }
 
         public override void Render()
