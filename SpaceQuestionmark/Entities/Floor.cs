@@ -224,7 +224,8 @@ namespace SpaceQuestionmark.Entities
         public void FindSpaceTiles()
         {
             // find borders to space and make negative pressure nodes there
-            
+            myGasManager.RemoveAllVoids();
+
             // a border to space is when a tile is touching a non-tile and doesn't have a wall on it
             for(int x = 0; x < 256; x++)
             {

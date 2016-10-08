@@ -94,6 +94,11 @@ namespace SpaceQuestionmark.Systems.Atmospherics
 
             if(gm != null)
             {
+                gm.NorthNeighbour = null;
+                gm.SouthNeighbour = null;
+                gm.EastNeighbour = null;
+                gm.WestNeighbour = null;
+
                 GasMixture north = GetMixtureAt(x, y - 1);
                 if(north != null)
                 {
@@ -178,6 +183,11 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     Draw.Circle((getPos.X * 64) + 32, (getPos.Y * 64) + 32, 4, new Color(1.0f - gm.GetPressure(), gm.GetPressure(), 0.0f, 1.0f));
                 }
             }
+        }
+
+        public void RemoveAllVoids()
+        {
+            allGasMixtures = allGasMixtures.Where(kvp => !kvp.Value.Void).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
     }
 }

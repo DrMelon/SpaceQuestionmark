@@ -210,10 +210,19 @@ namespace SpaceQuestionmark
                 map.WallClearTile(map.playerStartX + 2, map.playerStartY+2);
                 map.NeedUpdateSpace = true;
             }
+
             if (Global.controllerPlayerOne.Start.Pressed)
             {
-                thePlayer.Torso.Hurt(10);
+                //thePlayer.Lungs.Hurt(90);
+                ShakeCamera(1.0f, 50.0f);
+                map.WallFillTile(map.playerStartX + 2, map.playerStartY, 1);
+                map.WallFillTile(map.playerStartX + 2, map.playerStartY - 1, 1);
+                map.WallFillTile(map.playerStartX + 2, map.playerStartY + 1, 1);
+                map.WallFillTile(map.playerStartX + 2, map.playerStartY - 2, 1);
+                map.WallFillTile(map.playerStartX + 2, map.playerStartY + 2, 1);
+                map.NeedUpdateSpace = true;
             }
+
 
             if (thePlayer.myBody.currentVitality > 60)
             {
