@@ -16,6 +16,11 @@ using Otter;
 
 namespace SpaceQuestionmark.Entities
 {
+    public struct Room
+    {
+        public int x, y, w, h;
+    }
+
     public class Floor : EntityEx
     {
         public String myName = "Perfectly Generic Floor";
@@ -42,13 +47,15 @@ namespace SpaceQuestionmark.Entities
             floorCol = new GridCollider(256 * 64, 256 * 64, 64, 64, (int)Global.ColliderTags.FLOOR);
             wallMap = new Tilemap(Assets.GFX_WALLTILES, 256 * 64, 64);
             wallCol = new GridCollider(256 * 64, 256 * 64, 64, 64, (int)Global.ColliderTags.WALL);
-
+            myGasManager.relatedFloor = this;
             GenerateMap();
 
             AddGraphic(floorMap);
             AddCollider(floorCol);
             AddGraphic(wallMap);
             AddCollider(wallCol);
+
+            
         }
 
         public void GenerateMap()
@@ -56,13 +63,50 @@ namespace SpaceQuestionmark.Entities
             // Map
 
             // A WHAM BAM BOODLY TIME TO MAKE A SPACE SHIBOODLY
+            List<Room> roomsMade = new List<Room>();
 
             // Pick a player spawn point, and gen from there.
             playerStartX = Rand.Int(10, 245);
             playerStartY = Rand.Int(10, 245);
 
             // Make a lil starting pod room around the player here.
-            MakeRoom(playerStartX, playerStartY, 6, 80, 2);
+            MakeRoom(playerStartX, playerStartY, 6, 6, 2);
+            roomsMade.Add(new Room() { x=playerStartX, y=playerStartY, w=6, h=6 });
+
+            // Now make an asston of rooms
+            int maxRooms = 50;
+
+            for(int i = 0; i < 50; i++)
+            {
+                int roomMaxWidth = 20;
+                int roomMinWidth = 2;
+                int roomWidth = Rand.Int(roomMinWidth, roomMaxWidth);
+
+                int roomMaxHeight = 20;
+                int roomMinHeight = 2;
+                int roomHeight = Rand.Int(roomMinHeight, roomMaxHeight);
+
+                int xpos = Rand.Int(1, 254);
+                int ypos = Rand.Int(1, 254);
+
+                if(CheckSpaceForRoom(xpos, ypos, roomWidth, roomHeight))
+                {
+                    MakeRoom(xpos, ypos, roomWidth, roomHeight, 2);
+                    roomsMade.Add(new Room() { x = xpos, y = ypos, w = roomWidth, h = roomHeight });
+                }
+            }
+
+            // Now that rooms are made, tunnels gotta connect em.
+            for(int i = 0; i < roomsMade.Count-1; i+=2)
+            {
+                Room roomA = roomsMade[i];
+                Room roomB = roomsMade[i+1];
+
+                // make a tunnel from room A to room B.
+                //FloorFillRect(roomA.x + ((roomB.x - roomA.x) / 2), roomA.y, roomB.x - roomA.x, 1, 1, false);
+                //FloorFillRect(roomB.x, roomB.y + ((roomB.y - roomA.y) / 2), 1, roomB.y - roomA.y, 1, false);
+                FloorFillRect(roomA.x, roomA.y, 10, 1, 1, true);
+            }
 
             // Find borders to space and create negative pressure nodes
             FindSpaceTiles();
@@ -76,6 +120,28 @@ namespace SpaceQuestionmark.Entities
             FloorFillRect(cx - w / 2, cy - h / 2, w, h, floortile, true);
             FloorLineRect(cx - w / 2, cy - h / 2, w, h, 1, true);
             WallLineRect(cx - w / 2, cy - h / 2, w, h, 1);
+        }
+
+        public bool CheckSpaceForRoom(int cx, int cy, int w, int h)
+        {
+            bool spaceAvailable = true;
+
+            for(int i = cx - w/2; i < cx + w/2; i++)
+            {
+                for(int j = cy - h/2; j < cy + w/2; j++)
+                {
+                    if(IsFloorAt(i, j) || IsWallAt(i, j))
+                    {
+                        spaceAvailable = false;
+                    }
+                    if(j < 0 || j > 255 || i < 0 || i > 255)
+                    {
+                        spaceAvailable = false;
+                    }
+                }
+            }
+
+            return spaceAvailable;
         }
 
         public bool IsFloorAt(int x, int y)

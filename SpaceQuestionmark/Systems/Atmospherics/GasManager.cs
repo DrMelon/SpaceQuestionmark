@@ -16,6 +16,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
         // Processes all the gases for the tiles!
         public Dictionary<Vector2, GasMixture> allGasMixtures = new Dictionary<Vector2, GasMixture>();
         public bool NeedToRecalculateNeighbours = true;
+        public Entities.Floor relatedFloor = null;
 
         public void SetGasMixture(int x, int y, GasMixture gm)
         {
@@ -92,52 +93,58 @@ namespace SpaceQuestionmark.Systems.Atmospherics
 
 
 
-            if(gm != null)
+            if(gm != null )
             {
                 gm.NorthNeighbour = null;
                 gm.SouthNeighbour = null;
                 gm.EastNeighbour = null;
                 gm.WestNeighbour = null;
 
-                GasMixture north = GetMixtureAt(x, y - 1);
-                if(north != null)
+                if (!relatedFloor.IsWallAt(x, y))
                 {
-                    north.SouthNeighbour = gm;
-                    gm.NorthNeighbour = north;
 
-                    gm.RecountNeighbours = true;
-                    north.RecountNeighbours = true;
+                    GasMixture north = GetMixtureAt(x, y - 1);
+                    if (north != null && !relatedFloor.IsWallAt(x, y - 1))
+                    {
+                        north.SouthNeighbour = gm;
+                        gm.NorthNeighbour = north;
+
+                        gm.RecountNeighbours = true;
+                        north.RecountNeighbours = true;
+                    }
+
+                    GasMixture south = GetMixtureAt(x, y + 1);
+                    if (south != null && !relatedFloor.IsWallAt(x, y + 1))
+                    {
+                        south.NorthNeighbour = gm;
+                        gm.SouthNeighbour = south;
+
+                        gm.RecountNeighbours = true;
+                        south.RecountNeighbours = true;
+                    }
+
+                    GasMixture east = GetMixtureAt(x + 1, y);
+                    if (east != null && !relatedFloor.IsWallAt(x + 1, y))
+                    {
+                        east.WestNeighbour = gm;
+                        gm.EastNeighbour = east;
+
+                        gm.RecountNeighbours = true;
+                        east.RecountNeighbours = true;
+                    }
+
+                    GasMixture west = GetMixtureAt(x - 1, y);
+                    if (west != null && !relatedFloor.IsWallAt(x - 1, y))
+                    {
+                        west.EastNeighbour = gm;
+                        gm.WestNeighbour = west;
+
+                        gm.RecountNeighbours = true;
+                        west.RecountNeighbours = true;
+                    }
+
                 }
 
-                GasMixture south = GetMixtureAt(x, y + 1);
-                if (south != null)
-                {
-                    south.NorthNeighbour = gm;
-                    gm.SouthNeighbour = south;
-
-                    gm.RecountNeighbours = true;
-                    south.RecountNeighbours = true;
-                }
-
-                GasMixture east = GetMixtureAt(x + 1, y);
-                if (east != null)
-                {
-                    east.WestNeighbour = gm;
-                    gm.EastNeighbour = east;
-
-                    gm.RecountNeighbours = true;
-                    east.RecountNeighbours = true;
-                }
-
-                GasMixture west = GetMixtureAt(x - 1, y);
-                if (west != null)
-                {
-                    west.EastNeighbour = gm;
-                    gm.WestNeighbour = west;
-
-                    gm.RecountNeighbours = true;
-                    west.RecountNeighbours = true;
-                }
             }
 
 
@@ -171,6 +178,14 @@ namespace SpaceQuestionmark.Systems.Atmospherics
             foreach(var kvp in allGasMixtures)
             {
                 Vector2 getPos = kvp.Key;
+                if( (kvp.Key.X > ((Game.Instance.Scene as PlayState).thePlayer.X / 64) + 7) ||
+                    (kvp.Key.X < ((Game.Instance.Scene as PlayState).thePlayer.X / 64) - 7) ||
+                    (kvp.Key.Y > ((Game.Instance.Scene as PlayState).thePlayer.Y / 64) + 7) ||
+                    (kvp.Key.Y < ((Game.Instance.Scene as PlayState).thePlayer.Y / 64) - 7))
+                {
+                    continue;
+                }
+
                 GasMixture gm = kvp.Value;
                 
                 if (gm.GetPressure() < 0.1f)
@@ -179,8 +194,28 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                 }
                 else
                 {
-                    //Draw.RoundedLine((getPos.X * 64) + 32, (getPos.Y * 64) + 32, ((getPos.X * 64) + 32) + gm.GasMotion.X * 1000, ((getPos.Y * 64) + 32) + gm.GasMotion.Y * 1000, Color.Red, 3);
+                    Draw.Line((getPos.X * 64) + 32, (getPos.Y * 64) + 32, ((getPos.X * 64) + 32) + gm.GasMotion.X * 1000, ((getPos.Y * 64) + 32) + gm.GasMotion.Y * 1000, Color.Red, 3);
                     Draw.Circle((getPos.X * 64) + 32, (getPos.Y * 64) + 32, 4, new Color(1.0f - gm.GetPressure(), gm.GetPressure(), 0.0f, 1.0f));
+                }
+
+                if(gm.NorthNeighbour != null)
+                {
+                    Draw.Circle((getPos.X * 64) + 32, (getPos.Y * 64) + 16, 4, Color.Cyan);
+                }
+
+                if (gm.SouthNeighbour != null)
+                {
+                    Draw.Circle((getPos.X * 64) + 32, (getPos.Y * 64) + 32 + 16, 4, Color.Cyan);
+                }
+
+                if (gm.EastNeighbour != null)
+                {
+                    Draw.Circle((getPos.X * 64) + 32 + 16, (getPos.Y * 64) + 32, 4, Color.Cyan);
+                }
+
+                if (gm.WestNeighbour != null)
+                {
+                    Draw.Circle((getPos.X * 64) + 32 - 16, (getPos.Y * 64) + 32, 4, Color.Cyan);
                 }
             }
         }

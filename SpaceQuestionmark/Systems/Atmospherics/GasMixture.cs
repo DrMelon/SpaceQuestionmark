@@ -85,7 +85,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
             }
 
             // get our pressure
-            GasMotion = new Vector2(0, 0);
+
             float CurrentPressure = GetPressure();
 
             // ok, now!! check the neighbours' pressure levels.
@@ -192,6 +192,8 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                 DeferredGasChanges.Clear();
                 return; // do not update further if deferred changes happened.
             }
+
+            GasMotion = new Vector2(0, 0);
 
             // count the neighbours
             if (RecountNeighbours)

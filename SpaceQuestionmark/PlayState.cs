@@ -15,7 +15,7 @@ namespace SpaceQuestionmark
 
         Entities.Floor map;
 
-        Entities.Human thePlayer;
+        public Entities.Human thePlayer;
         Entity cameraFocus = new Entity();
 
         Spritemap<string> hpMeter = new Spritemap<string>(Assets.GFX_HP_METER, 32, 32);
@@ -204,10 +204,6 @@ namespace SpaceQuestionmark
                 //thePlayer.Lungs.Hurt(90);
                 ShakeCamera(1.0f, 50.0f);
                 map.WallClearTile(map.playerStartX + 2, map.playerStartY);
-                map.WallClearTile(map.playerStartX + 2, map.playerStartY-1);
-                map.WallClearTile(map.playerStartX + 2, map.playerStartY+1);
-                map.WallClearTile(map.playerStartX + 2, map.playerStartY-2);
-                map.WallClearTile(map.playerStartX + 2, map.playerStartY+2);
                 map.NeedUpdateSpace = true;
             }
 
@@ -216,10 +212,6 @@ namespace SpaceQuestionmark
                 //thePlayer.Lungs.Hurt(90);
                 ShakeCamera(1.0f, 50.0f);
                 map.WallFillTile(map.playerStartX + 2, map.playerStartY, 1);
-                map.WallFillTile(map.playerStartX + 2, map.playerStartY - 1, 1);
-                map.WallFillTile(map.playerStartX + 2, map.playerStartY + 1, 1);
-                map.WallFillTile(map.playerStartX + 2, map.playerStartY - 2, 1);
-                map.WallFillTile(map.playerStartX + 2, map.playerStartY + 2, 1);
                 map.NeedUpdateSpace = true;
             }
 
