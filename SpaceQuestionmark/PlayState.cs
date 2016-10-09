@@ -125,7 +125,7 @@ namespace SpaceQuestionmark
             if (gmAtPlayer != null)
             {
                 Vector2 gasVelocityMix = new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.GasMotion.Y * 1.0f, -15, 15));
-
+                
                 if (gmAtPlayer.NorthNeighbour != null)
                 {
                     gasVelocityMix += new Vector2(Otter.MathHelper.Clamp(gmAtPlayer.NorthNeighbour.GasMotion.X * 1.0f, -15, 15), Otter.MathHelper.Clamp(gmAtPlayer.NorthNeighbour.GasMotion.Y * 1.0f, -15, 15));

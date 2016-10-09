@@ -111,7 +111,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     foreach (var kvp in PresentGases)
                     {
                         NorthNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
-                        AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
+                        AddGasChange(kvp.Key, -Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                     }
                     GasMotion.Y -= pressureDiff;
                 }
@@ -132,7 +132,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     foreach (var kvp in PresentGases)
                     {
                         WestNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
-                        AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
+                        AddGasChange(kvp.Key, -Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                     }
                     GasMotion.X -= pressureDiff;
                 }
@@ -152,7 +152,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     foreach (var kvp in PresentGases)
                     {
                         EastNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
-                        AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
+                        AddGasChange(kvp.Key, -Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                     }
                     GasMotion.X += pressureDiff;
                 }
@@ -172,7 +172,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     foreach (var kvp in PresentGases)
                     {
                         SouthNeighbour.AddGasChange(kvp.Key, Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
-                        AddGasChange(kvp.Key, -pressureDiff * GetGasPercentage(kvp.Key) * dt);
+                        AddGasChange(kvp.Key, -Math.Min(pressureDiff * GetGasPercentage(kvp.Key) * dt, CurrentPressure * GetGasPercentage(kvp.Key)));
                     }
                     GasMotion.Y += pressureDiff;
                 }

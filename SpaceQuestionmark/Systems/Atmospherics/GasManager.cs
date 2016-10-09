@@ -106,7 +106,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     GasMixture north = GetMixtureAt(x, y - 1);
                     if (north != null && !relatedFloor.IsWallAt(x, y - 1))
                     {
-                        north.SouthNeighbour = gm;
+                        //north.SouthNeighbour = gm;
                         gm.NorthNeighbour = north;
 
                         gm.RecountNeighbours = true;
@@ -116,7 +116,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     GasMixture south = GetMixtureAt(x, y + 1);
                     if (south != null && !relatedFloor.IsWallAt(x, y + 1))
                     {
-                        south.NorthNeighbour = gm;
+                        //south.NorthNeighbour = gm;
                         gm.SouthNeighbour = south;
 
                         gm.RecountNeighbours = true;
@@ -126,7 +126,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     GasMixture east = GetMixtureAt(x + 1, y);
                     if (east != null && !relatedFloor.IsWallAt(x + 1, y))
                     {
-                        east.WestNeighbour = gm;
+                        //east.WestNeighbour = gm;
                         gm.EastNeighbour = east;
 
                         gm.RecountNeighbours = true;
@@ -136,7 +136,7 @@ namespace SpaceQuestionmark.Systems.Atmospherics
                     GasMixture west = GetMixtureAt(x - 1, y);
                     if (west != null && !relatedFloor.IsWallAt(x - 1, y))
                     {
-                        west.EastNeighbour = gm;
+                        //west.EastNeighbour = gm;
                         gm.WestNeighbour = west;
 
                         gm.RecountNeighbours = true;
