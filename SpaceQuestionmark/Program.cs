@@ -12,7 +12,10 @@ namespace SpaceQuestionmark
     {
         static void Main(string[] args)
         {
+#if STEAM
             Global.SteamInitialised = SteamAPI.Init();
+#endif
+
             Global.theGame = new Game("SPACE QUESTIONMARK", 1280/2, 800/2, 60, false);
             Global.theGame.SetWindowScale(2);
             //Global.theGame.FixedFramerate = false;
@@ -40,9 +43,29 @@ namespace SpaceQuestionmark
 
             Global.theGame.AddScene(new PlayState());
             Global.theGame.LockMouseCenter = true;
+
+            // Steam Checks
+            Util.Log("========= STEAM CHECKS ===========");
+            if (Global.SteamInitialised)
+            {
+                Util.Log("\tSteam Name: " + SteamFriends.GetPersonaName());
+                Util.Log("\tSteam Friend Count: " + SteamFriends.GetFriendCount(EFriendFlags.k_EFriendFlagAll).ToString());
+                SteamScreenshots.TriggerScreenshot();
+            }
+            else
+            {
+                Util.Log("Steam Not Initialized");
+            }
+
+
             Global.theGame.Start();
 
+
+
             
+
+
+
         }
     }
 }

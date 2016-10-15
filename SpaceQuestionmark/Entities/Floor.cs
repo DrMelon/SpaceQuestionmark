@@ -120,7 +120,7 @@ namespace SpaceQuestionmark.Entities
                 }
                 else
                 {
-                    FloorFillRect(roomA.x, roomA.y, xWidth, 1, 1, true, true);
+                    FloorFillRect(roomA.x, roomA.y, xWidth+1, 1, 1, true, true);
                     WallFillRect(roomA.x - 1, roomA.y + 1, xWidth + 2, 1, 1, true);
                     WallFillRect(roomA.x - 1, roomA.y - 1, xWidth + 2, 1, 1, true);
                 }
@@ -133,7 +133,7 @@ namespace SpaceQuestionmark.Entities
                 }
                 else
                 {
-                    FloorFillRect(roomB.x, roomA.y, 1, yWidth, 1, true, true);
+                    FloorFillRect(roomB.x, roomA.y, 1, yWidth+1, 1, true, true);
                     WallFillRect(roomB.x + 1, roomA.y - 1, 1, yWidth + 2, 1, true);
                     WallFillRect(roomB.x - 1, roomA.y - 1, 1, yWidth + 2, 1, true);
                 }
