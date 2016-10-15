@@ -103,9 +103,43 @@ namespace SpaceQuestionmark.Entities
                 Room roomB = roomsMade[i+1];
 
                 // make a tunnel from room A to room B.
-                //FloorFillRect(roomA.x + ((roomB.x - roomA.x) / 2), roomA.y, roomB.x - roomA.x, 1, 1, false);
-                //FloorFillRect(roomB.x, roomB.y + ((roomB.y - roomA.y) / 2), 1, roomB.y - roomA.y, 1, false);
-                FloorFillRect(roomA.x, roomA.y, 10, 1, 1, true);
+                int xWidth = roomB.x - roomA.x;
+                int xDir = Math.Sign(xWidth);
+                xWidth = Math.Abs(xWidth);
+
+                int yWidth = roomB.y - roomA.y;
+                int yDir = Math.Sign(yWidth);
+                yWidth = Math.Abs(yWidth);
+                
+
+                if(xDir < 0)
+                {
+                    FloorFillRect(roomB.x, roomA.y, xWidth, 1, 1, true, true);
+                    WallFillRect(roomB.x - 1, roomA.y + 1, xWidth + 2, 1, 1, true);
+                    WallFillRect(roomB.x - 1, roomA.y - 1, xWidth + 2, 1, 1, true);
+                }
+                else
+                {
+                    FloorFillRect(roomA.x, roomA.y, xWidth, 1, 1, true, true);
+                    WallFillRect(roomA.x - 1, roomA.y + 1, xWidth + 2, 1, 1, true);
+                    WallFillRect(roomA.x - 1, roomA.y - 1, xWidth + 2, 1, 1, true);
+                }
+
+                if(yDir < 0)
+                {
+                    FloorFillRect(roomB.x, roomB.y, 1, yWidth, 1, true, true);
+                    WallFillRect(roomB.x + 1, roomB.y - 1, 1, yWidth + 2, 1, true);
+                    WallFillRect(roomB.x - 1, roomB.y - 1, 1, yWidth + 2, 1, true);
+                }
+                else
+                {
+                    FloorFillRect(roomB.x, roomA.y, 1, yWidth, 1, true, true);
+                    WallFillRect(roomB.x + 1, roomA.y - 1, 1, yWidth + 2, 1, true);
+                    WallFillRect(roomB.x - 1, roomA.y - 1, 1, yWidth + 2, 1, true);
+                }
+
+
+
             }
 
             // Find borders to space and create negative pressure nodes
@@ -154,7 +188,7 @@ namespace SpaceQuestionmark.Entities
             return wallMap.GetTile(x, y) != null && wallMap.GetTileIndex(wallMap.GetTile(x, y)) != 0;
         }
 
-        public void FloorFillTile(int x, int y, int tileID, bool air = false)
+        public void FloorFillTile(int x, int y, int tileID, bool air = false, bool zapwalls = false)
         {
             floorMap.SetTile(x, y, tileID);
             floorCol.SetTile(x, y, true);
@@ -171,6 +205,11 @@ namespace SpaceQuestionmark.Entities
             {
                 myGasManager.SetGasMixture(x, y, new Systems.Atmospherics.GasMixture());
             }
+
+            if(zapwalls)
+            {
+                WallClearTile(x, y);
+            }
             
         }
 
@@ -181,13 +220,13 @@ namespace SpaceQuestionmark.Entities
             myGasManager.SetGasMixture(x, y, null);
         }
 
-        public void FloorFillRect(int x, int y, int w, int h, int tileID, bool air = false)
+        public void FloorFillRect(int x, int y, int w, int h, int tileID, bool air = false, bool zapwalls = false)
         {
             for (int i = x; i < x + w; i++)
             {
                 for (int j = y; j < y + h; j++)
                 {
-                    FloorFillTile(i, j, tileID, air);
+                    FloorFillTile(i, j, tileID, air, zapwalls);
                 }
             }
         }
@@ -217,10 +256,21 @@ namespace SpaceQuestionmark.Entities
             }
         }
 
-        public void WallFillTile(int x, int y, int tileID)
+        public void WallFillTile(int x, int y, int tileID, bool spaceOnly = false)
         {
-            wallMap.SetTile(x, y, tileID);
-            wallCol.SetTile(x, y, true);
+            if (!spaceOnly)
+            {
+                wallMap.SetTile(x, y, tileID);
+                wallCol.SetTile(x, y, true);
+            }
+            else
+            {
+                if (!IsFloorAt(x, y) && !IsWallAt(x, y))
+                {
+                    wallMap.SetTile(x, y, tileID);
+                    wallCol.SetTile(x, y, true);
+                }
+            }
         }
 
         public void WallClearTile(int x, int y)
@@ -229,13 +279,13 @@ namespace SpaceQuestionmark.Entities
             wallCol.SetTile(x, y, false);
         }
 
-        public void WallFillRect(int x, int y, int w, int h, int tileID)
+        public void WallFillRect(int x, int y, int w, int h, int tileID, bool spaceOnly = false)
         {
             for (int i = x; i < x + w; i++)
             {
                 for (int j = y; j < y + h; j++)
                 {
-                    WallFillTile(i, j, tileID);
+                    WallFillTile(i, j, tileID, spaceOnly);
                 }
             }
         }

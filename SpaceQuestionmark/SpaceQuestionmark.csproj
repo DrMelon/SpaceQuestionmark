@@ -102,6 +102,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractedController.cs" />
     <Compile Include="Airlock.cs" />
     <Compile Include="Assets.cs" />
     <Compile Include="Components\MobMovement.cs" />

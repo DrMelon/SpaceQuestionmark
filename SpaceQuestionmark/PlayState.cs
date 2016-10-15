@@ -31,6 +31,8 @@ namespace SpaceQuestionmark
         float camShake = 0.0f;
         float camShakeMag = 0.0f;
 
+
+
         public PlayState()
         {
             // Create Entities:
@@ -115,7 +117,7 @@ namespace SpaceQuestionmark
 
         public void MovePlayerWithGasFlow()
         {
-            if(Global.controllerPlayerOne.LB.Down)
+            if(Global.controllerPlayerOne.PrimaryContext.Down || thePlayer.GetComponent<Components.MobMovement>().GrippingWall)
             {
                 return;
             }
@@ -178,12 +180,12 @@ namespace SpaceQuestionmark
            
            
 
-            if (Global.controllerPlayerOne.Y.Down && o2Meter.Alpha < 1.0f)
+            if (Global.controllerPlayerOne.ShowQuickUI.Down && o2Meter.Alpha < 1.0f)
             {
                 o2Meter.Alpha += Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.UITHINK) * 5.0f;
                 hpMeter.Alpha += Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.UITHINK) * 5.0f;
             }
-            else if (!Global.controllerPlayerOne.Y.Down && o2Meter.Alpha > 0.0f)
+            else if (!Global.controllerPlayerOne.ShowQuickUI.Down && o2Meter.Alpha > 0.0f)
             {
                 o2Meter.Alpha -= Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.UITHINK) * 5.0f;
                 hpMeter.Alpha -= Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.UITHINK) * 5.0f;
@@ -198,7 +200,7 @@ namespace SpaceQuestionmark
                 o2Meter.Play("idle", false);
             }
 
-            if(Global.controllerPlayerOne.Back.Pressed)
+            if(Global.controllerPlayerOne.OpenInventory.Pressed)
             {
                 //thePlayer.Lungs.Hurt(90);
                 ShakeCamera(1.0f, 50.0f);
@@ -206,7 +208,7 @@ namespace SpaceQuestionmark
                 map.NeedUpdateSpace = true;
             }
 
-            if (Global.controllerPlayerOne.Start.Pressed)
+            if (Global.controllerPlayerOne.OpenMenu.Pressed)
             {
                 //thePlayer.Lungs.Hurt(90);
                 ShakeCamera(1.0f, 50.0f);

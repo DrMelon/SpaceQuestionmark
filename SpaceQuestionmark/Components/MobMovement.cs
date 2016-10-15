@@ -28,8 +28,8 @@ namespace SpaceQuestionmark.Components
         public Speed myMotion = new Speed(1200);
         public Speed myVelocity = new Speed(1200);
 
-        public float walkSpeed = 20;
-        public float runSpeed = 40;
+        public float walkSpeed = 40;
+        public float runSpeed = 80;
         public float slideSpeed = 60;
         public float fallSpeed = 120;
         public float boostSpeed = 120;
@@ -41,9 +41,11 @@ namespace SpaceQuestionmark.Components
 
         public Entities.EntityEx myEnt;
 
-        public ControllerXbox360 myController;
+        public AbstractedController myController;
 
         public MoveType currentMoveType = MoveType.WALK;
+
+        public bool GrippingWall = false;
 
         public override void Added()
         {
@@ -59,7 +61,7 @@ namespace SpaceQuestionmark.Components
         {
             float mvSpd = walkSpeed;
             
-            if (myController.B.Down && (currentMoveType == MoveType.RUN || currentMoveType == MoveType.WALK))
+            if (myController.Sprint.Down && (currentMoveType == MoveType.RUN || currentMoveType == MoveType.WALK))
             {
                 currentMoveType = MoveType.RUN;
                 mvSpd = runSpeed;
@@ -69,18 +71,18 @@ namespace SpaceQuestionmark.Components
                 currentMoveType = MoveType.WALK;
             }
 
-            if (Math.Abs(myController.LeftStick.X) > 0.1f)
+            if (Math.Abs(myController.Movement.X) > 0.1f)
             {
-                myMotion.X = myController.LeftStick.X * mvSpd;
+                myMotion.X = myController.Movement.X * mvSpd;
             }
             else
             {
                 myMotion.X = 0.0f;
             }
 
-            if (Math.Abs(myController.LeftStick.Y) > 0.1f)
+            if (Math.Abs(myController.Movement.Y) > 0.1f)
             {
-                myMotion.Y = myController.LeftStick.Y * mvSpd;
+                myMotion.Y = myController.Movement.Y * mvSpd;
             }
             else
             {
@@ -239,24 +241,24 @@ namespace SpaceQuestionmark.Components
 
                 // LS
                 Draw.Circle(myEnt.X - 60, myEnt.Y + 60, 32, Color.None, Color.Custom("FaintBlue"), 1);
-                Draw.Circle(myEnt.X - 60 + (32 * myController.LeftStick.X), myEnt.Y + 60 + (32 * myController.LeftStick.Y), 8, myController.LeftStickClick.Down ? Color.Custom("FaintYellow") : Color.None, Color.Custom("FaintYellow"), 1);
+                Draw.Circle(myEnt.X - 60 + (32 * myController.Movement.X), myEnt.Y + 60 + (32 * myController.Movement.Y), 8, myController.PrimaryContext.Down ? Color.Custom("FaintYellow") : Color.None, Color.Custom("FaintYellow"), 1);
 
                 // RS
                 Draw.Circle(myEnt.X + 60, myEnt.Y + 60, 32, Color.None, Color.Custom("FaintBlue"), 1);
-                Draw.Circle(myEnt.X + 60 + (32 * myController.RightStick.X), myEnt.Y + 60 + (32 * myController.RightStick.Y), 8, myController.RightStickClick.Down ? Color.Custom("FaintYellow") : Color.None, Color.Custom("FaintYellow"), 1);
+                Draw.Circle(myEnt.X + 60 + (32 * myController.Looking.X), myEnt.Y + 60 + (32 * myController.Looking.Y), 8, myController.SecondaryContext.Down ? Color.Custom("FaintYellow") : Color.None, Color.Custom("FaintYellow"), 1);
 
                 // A B X Y
-                Draw.Circle(myEnt.X + 90, myEnt.Y + 30, 8, myController.X.Down? Color.Custom("FaintBlue") : Color.None, Color.Custom("FaintBlue"), 1);
-                Draw.Circle(myEnt.X + 105, myEnt.Y + 45, 8, myController.A.Down ? Color.Custom("FaintGreen") : Color.None, Color.Custom("FaintGreen"), 1);
-                Draw.Circle(myEnt.X + 120, myEnt.Y + 30, 8, myController.B.Down ? Color.Custom("FaintRed") : Color.None, Color.Custom("FaintRed"), 1);
-                Draw.Circle(myEnt.X + 105, myEnt.Y + 15, 8, myController.Y.Down ? Color.Custom("FaintYellow") : Color.None, Color.Custom("FaintYellow"), 1);
+               // Draw.Circle(myEnt.X + 90, myEnt.Y + 30, 8, myController.X.Down? Color.Custom("FaintBlue") : Color.None, Color.Custom("FaintBlue"), 1);
+                Draw.Circle(myEnt.X + 105, myEnt.Y + 45, 8, myController.MenuAccept.Down ? Color.Custom("FaintGreen") : Color.None, Color.Custom("FaintGreen"), 1);
+                Draw.Circle(myEnt.X + 120, myEnt.Y + 30, 8, myController.Sprint.Down ? Color.Custom("FaintRed") : Color.None, Color.Custom("FaintRed"), 1);
+                Draw.Circle(myEnt.X + 105, myEnt.Y + 15, 8, myController.ShowQuickUI.Down ? Color.Custom("FaintYellow") : Color.None, Color.Custom("FaintYellow"), 1);
 
                 // Bumps n trigg
-                Draw.Rectangle(myEnt.X - 80 - 8, myEnt.Y + 10 - 4, 16, 8, myController.LT.Down ? Color.Custom("FaintMagenta") : Color.None, Color.Custom("FaintMagenta"), 1);
-                Draw.Rectangle(myEnt.X - 80 - 8, myEnt.Y + 20 - 4, 16, 8, myController.LB.Down ? Color.Custom("FaintCyan") : Color.None, Color.Custom("FaintCyan"), 1);
+                Draw.Rectangle(myEnt.X - 80 - 8, myEnt.Y + 10 - 4, 16, 8, myController.GraspLeftHand.Down ? Color.Custom("FaintMagenta") : Color.None, Color.Custom("FaintMagenta"), 1);
+                Draw.Rectangle(myEnt.X - 80 - 8, myEnt.Y + 20 - 4, 16, 8, myController.InteractLeftHand.Down ? Color.Custom("FaintCyan") : Color.None, Color.Custom("FaintCyan"), 1);
 
-                Draw.Rectangle(myEnt.X + 80 - 8, myEnt.Y + 10 - 4, 16, 8, myController.RT.Down ? Color.Custom("FaintMagenta") : Color.None, Color.Custom("FaintMagenta"), 1);
-                Draw.Rectangle(myEnt.X + 80 - 8, myEnt.Y + 20 - 4, 16, 8, myController.RB.Down ? Color.Custom("FaintCyan") : Color.None, Color.Custom("FaintCyan"), 1);
+                Draw.Rectangle(myEnt.X + 80 - 8, myEnt.Y + 10 - 4, 16, 8, myController.GraspRightHand.Down ? Color.Custom("FaintMagenta") : Color.None, Color.Custom("FaintMagenta"), 1);
+                Draw.Rectangle(myEnt.X + 80 - 8, myEnt.Y + 20 - 4, 16, 8, myController.InteractRightHand.Down ? Color.Custom("FaintCyan") : Color.None, Color.Custom("FaintCyan"), 1);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace SpaceQuestionmark
     {
         public static Game theGame;
         public static Session thePlayerSession;
-        public static ControllerXbox360 controllerPlayerOne;
+        public static AbstractedController controllerPlayerOne;
         public static bool SteamInitialised;
 
         public static bool debugMode = false;

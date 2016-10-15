@@ -18,16 +18,17 @@ namespace SpaceQuestionmark
             //Global.theGame.FixedFramerate = false;
 
             Global.thePlayerSession = Global.theGame.AddSession("PlayerOne");
-            Global.thePlayerSession.Controller = new ControllerXbox360(0);
-            Global.controllerPlayerOne = Global.thePlayerSession.GetController<ControllerXbox360>();
-            Global.controllerPlayerOne.LeftStick.AddKeys(new Key[] { Otter.Key.W, Otter.Key.D, Otter.Key.S, Otter.Key.A });
-            Global.controllerPlayerOne.Start.AddKey(Otter.Key.Return);
+            Global.thePlayerSession.Controller = new AbstractedController(true, 0);
+            Global.controllerPlayerOne = Global.thePlayerSession.GetController<AbstractedController>();
+            Global.controllerPlayerOne.Movement.AddKeys(new Key[] { Otter.Key.W, Otter.Key.D, Otter.Key.S, Otter.Key.A });
+            Global.controllerPlayerOne.OpenMenu.AddKey(Otter.Key.Return);
             // radial
-            Global.controllerPlayerOne.LB.AddKey(Otter.Key.Q);
+            Global.controllerPlayerOne.ShowQuickUI.AddKey(Otter.Key.Q);
             // use/grab/inspect
-            Global.controllerPlayerOne.X.AddMouseButton(Otter.MouseButton.Left);
+            Global.controllerPlayerOne.GraspLeftHand.AddMouseButton(Otter.MouseButton.Left);
             // throw/hit
-            Global.controllerPlayerOne.B.AddMouseButton(Otter.MouseButton.Right);
+            Global.controllerPlayerOne.Sprint.AddMouseButton(Otter.MouseButton.Right);
+            
 
             // Create Colours
             Color.AddCustom(new Color(1.0f, 0.0f, 0.0f, 0.66f), "FaintRed");
