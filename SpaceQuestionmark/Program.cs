@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Otter;
-
+using Steamworks;
 
 namespace SpaceQuestionmark
 {
@@ -12,7 +12,7 @@ namespace SpaceQuestionmark
     {
         static void Main(string[] args)
         {
-            
+            Global.SteamInitialised = SteamAPI.Init();
             Global.theGame = new Game("SPACE QUESTIONMARK", 1280/2, 800/2, 60, false);
             Global.theGame.SetWindowScale(2);
             //Global.theGame.FixedFramerate = false;
