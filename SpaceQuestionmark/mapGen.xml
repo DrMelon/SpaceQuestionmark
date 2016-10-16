@@ -1,0 +1,3 @@
+<mapgen>
+	<overlapping name="Station" N="3" width="256" height="256" periodic="True"/>
+</mapgen>

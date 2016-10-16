@@ -87,6 +87,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SpaceQuestionmark.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Steamworks.NET, Version=9.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -94,6 +97,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -137,6 +141,11 @@
     <Compile Include="Systems\Inventory.cs" />
     <Compile Include="Systems\Time.cs" />
     <Compile Include="UI\Textbox.cs" />
+    <Compile Include="WaveFunctionCollapse\Generate.cs" />
+    <Compile Include="WaveFunctionCollapse\Model.cs" />
+    <Compile Include="WaveFunctionCollapse\OverlappingModel.cs" />
+    <Compile Include="WaveFunctionCollapse\SimpleTiledModel.cs" />
+    <Compile Include="WaveFunctionCollapse\Stuff.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -172,6 +181,36 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSteamworks.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mapGen.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\data.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\floor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\junction.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\l.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\l_fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\side.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\t.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Station\up.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="steam_api.dll">
