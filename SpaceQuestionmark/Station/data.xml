@@ -1,58 +1,43 @@
-<set size="3">
+<set size="7">
 	<tiles>
-		<tile name="up" symmetry="I" weight="2.0"/>
-		<tile name="empty" symmetry="X" weight="5.0"/>
-		<tile name="floor" symmetry="X" weight="3.0"/>
-		<tile name="l" symmetry="L" weight = "1.0"/>
-		<tile name="l_fill" symmetry="L" weight = "1.0"/>
-		<tile name="t" symmetry="T" weight = "1.0"/>
-    <tile name="side" symmetry="I" weight = "2.0"/>
-    <tile name="junction" symmetry="I" weight = "1.0"/>
+		<tile name="space" symmetry="X" weight="50.0"/>
+	
+		<tile name="1_straight" symmetry="I" weight="2.0"/>
+		<tile name="3_straight" symmetry="I" weight="5.0"/>
+		
+		<tile name="1_t" symmetry="T" weight = "1.0"/>
+		<tile name="3_to_1_t" symmetry="T" weight = "1.0"/>
+		<tile name="3_t" symmetry="T" weight = "1.0"/>
+		
+		<tile name="1_corner" symmetry="L" weight = "1.0"/>
+		<tile name="3_corner" symmetry="L" weight = "1.0"/>
+		
+		<tile name="1_junction" symmetry="X" weight = "1.0"/>
+		<tile name="3_junction" symmetry="X" weight = "1.0"/>	
+
+		
+		
+
 	</tiles>
   <neighbors>
-    <neighbor left="l 1" right="empty"/>
-    <neighbor left="l" right="up"/>
-    <neighbor left="l" right="up 1"/>
-    <neighbor left="l" right="floor"/>
-    <neighbor left="l 1" right="floor 1"/>
-    <neighbor left="l" right="t 2"/>
-    <neighbor left="l" right="t 3"/>
-    <neighbor left="l" right="t"/>
-    <neighbor left="l 1" right="t 1"/>
-    <neighbor left="l 1" right="l 3"/>
-    <neighbor left="l 1" right="l"/>
-    <neighbor left="l" right="l 1"/>
-    <neighbor left="l" right="l 2"/>
-    <neighbor left="floor" right="l_fill"/>
-    <neighbor left="up" right="up"/>
-    <neighbor left="up" right="up 1"/>
-    <neighbor left="up 1" right="up 1"/>
-    <neighbor left="up" right="floor"/>
-    <neighbor left="up 1" right="floor"/>
-    <neighbor left="up" right="t"/>
-    <neighbor left="up" right="t 3"/>
-    <neighbor left="up 1" right="t"/>
-    <neighbor left="up 1" right="t 3"/>
-    <neighbor left="empty" right="empty"/>
-    <neighbor left="empty" right="floor 1"/>
-    <neighbor left="empty" right="t 1"/>
-    <neighbor left="floor" right="floor"/>
-    <neighbor left="floor 1" right="floor 1"/>
-    <neighbor left="floor" right="t"/>
-    <neighbor left="floor 1" right="t 1"/>
-    <neighbor left="floor" right="t 3"/>
-    <neighbor left="t 1" right="t 3"/>
-    <neighbor left="t" right="t"/>
-    <neighbor left="t 2" right="t"/>
-    <neighbor left="t 1" right="t"/>
-    <neighbor left="t 3" right="t 1"/>
-    <neighbor left="side" right="side 1"/>
-    <neighbor left="side" right="l"/>
-    <neighbor left="side" right="t"/>
-    <neighbor left="side" right="junction"/>
-    <neighbor left="side 1" right="side"/>
-    <neighbor left="junction" right="side"/>
-    <neighbor left="junction" right="t"/>
-    <neighbor left="junction" right="up"/>
+	<neighbour left="space" right="space" />
+  
+	<neighbour left="space" right="1_straight" />
+	<neighbour left="1_straight" right="space" />
+	<neighbour left="space" right="1_straight" />
+	<neighbour left="3_straight" right="space" /> 
+ 
+	<neighbor left="1_straight 1" right="1_straight 1"/>
+	<neighbor left="3_straight 1" right="3_straight 1"/>
+	
+	<neighbor left="1_corner" right="1_straight 1"/>
+	<neighbor left="1_corner 1" right="1_straight 1"/>
+	
+	<neighbor left="3_corner" right="3_straight 1"/>	
+	<neighbor left="3_corner 1" right="3_straight 1"/>	
+	
+	<neighbour left="1_junction" right="1_junction"/>
+	<neighbour left="3_junction" right="3_junction"/>
+    
   </neighbors>
 </set>

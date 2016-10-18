@@ -62,7 +62,7 @@ namespace SpaceQuestionmark.Entities
         {
             // Map
             // wave-function gen
-           // Generate.DoTheDance();
+            Generate.DoTheDance();
 
             // A WHAM BAM BOODLY TIME TO MAKE A SPACE SHIBOODLY
             List<Room> roomsMade = new List<Room>();
