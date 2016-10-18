@@ -1,43 +1,131 @@
 <set size="7">
 	<tiles>
-		<tile name="space" symmetry="X" weight="50.0"/>
+		<tile name="space" symmetry="X" weight="5.0"/>
 	
-		<tile name="1_straight" symmetry="I" weight="2.0"/>
+		<tile name="1_straight" symmetry="I" weight="5.0"/>
 		<tile name="3_straight" symmetry="I" weight="5.0"/>
 		
 		<tile name="1_t" symmetry="T" weight = "1.0"/>
-		<tile name="3_to_1_t" symmetry="T" weight = "1.0"/>
+		<tile name="3_to_1_t" symmetry="T" weight = "25.0"/>
 		<tile name="3_t" symmetry="T" weight = "1.0"/>
 		
 		<tile name="1_corner" symmetry="L" weight = "1.0"/>
 		<tile name="3_corner" symmetry="L" weight = "1.0"/>
 		
 		<tile name="1_junction" symmetry="X" weight = "1.0"/>
-		<tile name="3_junction" symmetry="X" weight = "1.0"/>	
+		<tile name="3_junction" symmetry="X" weight = "1.0"/>
 
-		
-		
+    <tile name="border" symmetry="T" weight = "1.0"/>
+    <tile name="1_border" symmetry="T" weight = "1.0"/>
+    <tile name="3_border" symmetry="T" weight = "1.0"/>
+    <tile name="border_corner" symmetry="L" weight = "0.2"/>
+    <tile name="border_inner" symmetry="L" weight = "0.2"/>
+
+    <tile name="sec" symmetry="X" weight = "0.5" />
 
 	</tiles>
   <neighbors>
-	<neighbour left="space" right="space" />
-  
-	<neighbour left="space" right="1_straight" />
-	<neighbour left="1_straight" right="space" />
-	<neighbour left="space" right="1_straight" />
-	<neighbour left="3_straight" right="space" /> 
- 
-	<neighbor left="1_straight 1" right="1_straight 1"/>
-	<neighbor left="3_straight 1" right="3_straight 1"/>
+	  <neighbour left="space" right="space" />
+    <neighbour left="space" right="1_straight" />
+    <neighbour left="space" right="3_straight" />
+    <neighbour left="space" right="1_corner" />
+    <neighbour left="space" right="1_corner 3" />
+    <neighbour left="space" right="3_corner" />
+    <neighbour left="space" right="3_corner 3" />
+    <neighbour left="space" right="1_t 1" />
+    <neighbour left="space" right="3_t 1" />
+    <neighbour left="space" right="3_to_1_t 1" />
+    <neighbour left="space" right="border 3" />
+    <neighbour left="space" right="border_corner 3" />
+    <neighbour left="space" right="border_corner" />
+        
+    <neighbor left="1_straight" right="1_straight"/>
+    <neighbor left="1_straight" right="1_corner"/>
+    <neighbor left="1_straight" right="1_corner 3"/>
+    
+    <neighbor left="3_straight" right="3_straight"/>
+    <neighbor left="3_straight" right="3_corner"/>
+    <neighbor left="3_straight" right="3_corner 3"/>
+    
+    <neighbor left="1_straight 1" right="1_straight 1"/>
+	  <neighbor left="3_straight 1" right="3_straight 1"/>
+    <neighbor left="1_straight" right="3_straight"/>
 	
-	<neighbor left="1_corner" right="1_straight 1"/>
-	<neighbor left="1_corner 1" right="1_straight 1"/>
+	  <neighbor left="1_corner" right="1_straight 1"/>
+    <neighbor left="1_straight 1" right="1_corner 1"/>
+    <neighbor left="1_straight 1" right="1_corner 2"/>  
+	  <neighbor left="1_corner 3" right="1_straight 1"/>
 	
-	<neighbor left="3_corner" right="3_straight 1"/>	
-	<neighbor left="3_corner 1" right="3_straight 1"/>	
+	  <neighbor left="3_corner" right="3_straight 1"/>
+    <neighbor left="3_straight 1" right="3_corner 1"/>
+    <neighbor left="3_straight 1" right="3_corner 2"/>
+    <neighbor left="3_corner 3" right="3_straight 1"/>	
 	
-	<neighbour left="1_junction" right="1_junction"/>
-	<neighbour left="3_junction" right="3_junction"/>
+	  <neighbour left="1_junction" right="1_junction"/>
+    <neighbour left="1_junction" right="1_straight 1"/>
+	  <neighbour left="3_junction" right="3_junction"/>
+    <neighbour left="3_junction" right="3_straight 3"/>
+
+    <neighbor left="1_t" right="1_t 2"/>
+    <neighbor left="1_t" right="1_t 3"/>
+    <neighbor left="1_t 1" right="1_t 2"/>
+    <neighbor left="1_t 1" right="1_t 3"/>
+    <neighbor left="1_straight 1" right="1_t"/>
+    <neighbor left="1_t 1" right="1_straight 1"/>
+    <neighbor left="1_straight 1" right="1_t 2"/>
+    <neighbor left="1_straight 1" right="1_t 3"/>
+    <neighbor left="1_corner" right="1_t"/>
+    <neighbor left="1_corner" right="1_t 2"/>
+    <neighbor left="1_corner" right="1_t 3"/>
+    <neighbor left="1_corner 3" right="1_t"/>
+    <neighbor left="1_corner 3" right="1_t 2"/>
+    <neighbor left="1_corner 3" right="1_t 3"/>
+
+    <neighbor left="3_t" right="3_t 2"/>
+    <neighbor left="3_t" right="3_t 3"/>
+    <neighbor left="3_t 1" right="3_t 2"/>
+    <neighbor left="3_t 1" right="3_t 3"/>
+    <neighbor left="3_straight 1" right="3_t"/>
+    <neighbor left="3_t 1" right="3_straight 1"/>
+    <neighbor left="3_straight 1" right="3_t 2"/>
+    <neighbor left="3_straight 1" right="3_t 3"/>
+    <neighbor left="3_corner" right="3_t"/>
+    <neighbor left="3_corner" right="3_t 2"/>
+    <neighbor left="3_corner" right="3_t 3"/>
+    <neighbor left="3_corner 3" right="3_t"/>
+    <neighbor left="3_corner 3" right="3_t 2"/>
+    <neighbor left="3_corner 3" right="3_t 3"/>
+
+    <neighbor left="3_straight 1" right="3_to_1_t"/>
+    <neighbor left="3_straight 1" right="3_to_1_t 2"/>
+    <neighbor left="1_straight 1" right="3_to_1_t 3"/>
+
+    <neighbour left="border" right="border" />
+    <neighbour left="border" right="1_border" />
+    <neighbour left="border" right="3_border" />
+    <neighbour left="border 1" right="1_straight" />
+    <neighbour left="border 1" right="3_straight" />
+    <neighbour left="border 1" right="border 3" />
+    <neighbour left="border 2" right="border_inner 1" />
+    <neighbour left="border_corner" right="border" />
+    <neighbour left="border" right="border_corner 1" />
+    <neighbour left="border_corner 1" right="border_corner" />
+    <neighbour left="border_corner 1" right="border_corner 3" />
+    <neighbour left="border_corner 2" right="border_corner 3" />
+    <neighbour left="border_corner 2" right="border_corner" />
+    <neighbour left="border_inner" right="border_corner 2" />
+    <neighbour left="1_border 1" right="1_straight 1" />
+    <neighbour left="3_border 1" right="3_straight 1" />
+
+    <neighbor left="sec" right="sec"/>
+    <neighbor left="sec" right="border 1"/>
+    <neighbor left="sec" right="1_border 1"/>
+    <neighbor left="sec" right="3_border 1"/>
+    <neighbor left="sec" right="border_inner"/>
+    <neighbor left="sec" right="border_inner 3"/>
+
+
+    
     
   </neighbors>
 </set>
