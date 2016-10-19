@@ -55,5 +55,8 @@ public static class Generate
 
 			counter++;
 		}
+
+
+        Otter.Util.Log("EGG");
 	}
 }

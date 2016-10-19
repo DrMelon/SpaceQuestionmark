@@ -1,12 +1,12 @@
 <set size="7">
 	<tiles>
-		<tile name="space" symmetry="X" weight="5.0"/>
+		<tile name="space" symmetry="X" weight="10.0"/>
 	
-		<tile name="1_straight" symmetry="I" weight="5.0"/>
-		<tile name="3_straight" symmetry="I" weight="5.0"/>
+		<tile name="1_straight" symmetry="I" weight="2.0"/>
+		<tile name="3_straight" symmetry="I" weight="2.0"/>
 		
 		<tile name="1_t" symmetry="T" weight = "1.0"/>
-		<tile name="3_to_1_t" symmetry="T" weight = "25.0"/>
+		<tile name="3_to_1_t" symmetry="T" weight = "1.0"/>
 		<tile name="3_t" symmetry="T" weight = "1.0"/>
 		
 		<tile name="1_corner" symmetry="L" weight = "1.0"/>
@@ -18,10 +18,41 @@
     <tile name="border" symmetry="T" weight = "1.0"/>
     <tile name="1_border" symmetry="T" weight = "1.0"/>
     <tile name="3_border" symmetry="T" weight = "1.0"/>
-    <tile name="border_corner" symmetry="L" weight = "0.2"/>
-    <tile name="border_inner" symmetry="L" weight = "0.2"/>
+    <tile name="border_corner" symmetry="L" weight = "0.4"/>
+    <tile name="border_inner" symmetry="L" weight = "1.0"/>
+    
+    <tile name="1_border_corner" symmetry="T" weight ="1.0"/>
+    <tile name="3_border_corner" symmetry="T" weight ="1.0"/>
+    
+    <tile name="1_border_cornerF" symmetry="T" weight ="1.0"/>
+    <tile name="3_border_cornerF" symmetry="T" weight ="1.0"/>
+    
+    <tile name="1_border_t" symmetry="T" weight ="1.0"/>
+    <tile name="3_border_t" symmetry="T" weight ="1.0"/>
+    
+    <tile name="1_border_junction" symmetry="T" weight ="60.0"/>
+    <tile name="3_border_junction" symmetry="T" weight ="1.0"/>
+    
+    <tile name="border_1_straight" symmetry="T" weight ="1.0"/>
+    <tile name="border_3_straight" symmetry="T" weight ="1.0"/>
+    <tile name="border_1_t" symmetry="T" weight ="1.0"/>
+    <tile name="border_3_t" symmetry="T" weight ="1.0"/>   
+    <tile name="border_1_corner" symmetry="T" weight = "1.0"/>
+    <tile name="border_1_cornerF" symmetry="T" weight = "1.0"/>
+    
 
-    <tile name="sec" symmetry="X" weight = "0.5" />
+    <tile name="sec" symmetry="X" weight = "2.0" />
+    <tile name="sci" symmetry="X" weight = "2.0" />
+    <tile name="med" symmetry="X" weight = "2.0" />
+    <tile name="disp" symmetry="X" weight = "2.0" />
+    <tile name="eng" symmetry="X" weight = "2.0" />
+    <tile name="comm" symmetry="X" weight = "2.0" />
+    <tile name="const" symmetry="X" weight = "2.0" />
+    <tile name="crew" symmetry="X" weight = "2.0" />
+    <tile name="misc" symmetry="X" weight = "2.0" />
+    <tile name="shuttle" symmetry="X" weight = "2.0" />
+    <tile name="stor" symmetry="X" weight = "2.0" />
+    <tile name="atmos" symmetry="X" weight = "2.0" />
 
 	</tiles>
   <neighbors>
@@ -105,6 +136,20 @@
     <neighbour left="border" right="3_border" />
     <neighbour left="border 1" right="1_straight" />
     <neighbour left="border 1" right="3_straight" />
+    
+    <neighbour left="1_border 1" right="1_straight 1" />
+    <neighbour left="3_border 1" right="3_straight 1" />
+    <neighbour left="1_border 1" right="1_t" />
+    <neighbour left="1_border 1" right="1_t 3" />
+    <neighbour left="1_border 1" right="1_corner 1" />
+    <neighbour left="1_border 1" right="1_corner 2" />
+    <neighbour left="3_border 1" right="3_t" />
+    <neighbour left="3_border 1" right="3_t 3" />
+    <neighbour left="3_border 1" right="3_corner 1" />
+    <neighbour left="3_border 1" right="3_corner 2" />
+    
+    <neighbour left="border 1" right="1_corner" />
+    <neighbour left="border 1" right="3_corner" />
     <neighbour left="border 1" right="border 3" />
     <neighbour left="border 2" right="border_inner 1" />
     <neighbour left="border_corner" right="border" />
@@ -114,8 +159,29 @@
     <neighbour left="border_corner 2" right="border_corner 3" />
     <neighbour left="border_corner 2" right="border_corner" />
     <neighbour left="border_inner" right="border_corner 2" />
-    <neighbour left="1_border 1" right="1_straight 1" />
-    <neighbour left="3_border 1" right="3_straight 1" />
+    
+    <neighbour left="1_border_corner" right="1_straight 1"/>
+    <neighbour left="1_border_corner" right="1_border_cornerF"/>
+    <neighbour left="1_straight 1" right="1_border_cornerF"/>
+    
+    <neighbour left="3_border_corner" right="3_straight 1"/>
+    <neighbour left="3_border_corner" right="3_border_cornerF"/>
+    <neighbour left="3_straight 1" right="3_border_cornerF"/>
+    
+    <neighbour left="1_border_t" right="1_straight 1"/>
+    <neighbour left="1_straight 1" right="1_border_t"/>
+    <neighbour left="3_border_t" right="3_straight 1"/>
+    <neighbour left="3_straight 1" right="3_border_t"/>
+    
+    <neighbour left="1_border_junction" right="1_straight 1"/>
+    <neighbour left="1_border_junction 1" right="1_straight 1"/>
+    <neighbour left="1_straight 1" right="1_border_junction"/>
+    <neighbour left="3_border_junction" right="3_straight 1"/>
+    <neighbour left="3_border_junction 1" right="3_straight 1"/>
+    <neighbour left="3_straight 1" right="3_border_junction"/>
+    
+    <neighbour left="border_1_straight" right="border_1_straight"/>
+
 
     <neighbor left="sec" right="sec"/>
     <neighbor left="sec" right="border 1"/>
@@ -123,6 +189,180 @@
     <neighbor left="sec" right="3_border 1"/>
     <neighbor left="sec" right="border_inner"/>
     <neighbor left="sec" right="border_inner 3"/>
+    <neighbor left="sec" right="1_border_corner 1" />
+    <neighbor left="1_border_corner 3" right="sec" />
+    <neighbor left="sec" right="1_border_cornerF 1" />
+    <neighbor left="sec" right="1_border_t 1" />
+    <neighbor left="sec" right="1_border_junction 1" />
+    <neighbor left="sec" right="3_border_corner 1" />
+    <neighbor left="sec" right="3_border_cornerF 1" />
+    <neighbor left="sec" right="3_border_t 1" />
+    <neighbor left="sec" right="3_border_junction 1" />
+    
+    <neighbor left="sci" right="sci"/>
+    <neighbor left="sci" right="border 1"/>
+    <neighbor left="sci" right="1_border 1"/>
+    <neighbor left="sci" right="3_border 1"/>
+    <neighbor left="sci" right="border_inner"/>
+    <neighbor left="sci" right="border_inner 3"/>
+    <neighbor left="sci" right="1_border_corner 1" />
+    <neighbor left="sci" right="1_border_cornerF 1" />
+    <neighbor left="sci" right="1_border_t 1" />
+    <neighbor left="sci" right="1_border_junction 1" />
+    <neighbor left="sci" right="3_border_corner 1" />
+    <neighbor left="sci" right="3_border_cornerF 1" />
+    <neighbor left="sci" right="3_border_t 1" />
+    <neighbor left="sci" right="3_border_junction 1" />
+
+    <neighbor left="atmos" right="atmos"/>
+    <neighbor left="atmos" right="border 1"/>
+    <neighbor left="atmos" right="1_border 1"/>
+    <neighbor left="atmos" right="3_border 1"/>
+    <neighbor left="atmos" right="border_inner"/>
+    <neighbor left="atmos" right="border_inner 3"/>
+    <neighbor left="atmos" right="1_border_corner 1" />
+    <neighbor left="atmos" right="1_border_cornerF 1" />
+    <neighbor left="atmos" right="1_border_t 1" />
+    <neighbor left="atmos" right="1_border_junction 1" />
+    <neighbor left="atmos" right="3_border_corner 1" />
+    <neighbor left="atmos" right="3_border_cornerF 1" />
+    <neighbor left="atmos" right="3_border_t 1" />
+    <neighbor left="atmos" right="3_border_junction 1" />
+
+    <neighbor left="comm" right="comm"/>
+    <neighbor left="comm" right="border 1"/>
+    <neighbor left="comm" right="1_border 1"/>
+    <neighbor left="comm" right="3_border 1"/>
+    <neighbor left="comm" right="border_inner"/>
+    <neighbor left="comm" right="border_inner 3"/>
+    <neighbor left="comm" right="1_border_corner 1" />
+    <neighbor left="comm" right="1_border_cornerF 1" />
+    <neighbor left="comm" right="1_border_t 1" />
+    <neighbor left="comm" right="1_border_junction 1" />
+    <neighbor left="comm" right="3_border_corner 1" />
+    <neighbor left="comm" right="3_border_cornerF 1" />
+    <neighbor left="comm" right="3_border_t 1" />
+    <neighbor left="comm" right="3_border_junction 1" />
+
+    <neighbor left="const" right="const"/>
+    <neighbor left="const" right="border 1"/>
+    <neighbor left="const" right="1_border 1"/>
+    <neighbor left="const" right="3_border 1"/>
+    <neighbor left="const" right="border_inner"/>
+    <neighbor left="const" right="border_inner 3"/>
+    <neighbor left="const" right="1_border_corner 1" />
+    <neighbor left="const" right="1_border_cornerF 1" />
+    <neighbor left="const" right="1_border_t 1" />
+    <neighbor left="const" right="1_border_junction 1" />
+    <neighbor left="const" right="3_border_corner 1" />
+    <neighbor left="const" right="3_border_cornerF 1" />
+    <neighbor left="const" right="3_border_t 1" />
+    <neighbor left="const" right="3_border_junction 1" />
+
+    <neighbor left="crew" right="crew"/>
+    <neighbor left="crew" right="border 1"/>
+    <neighbor left="crew" right="1_border 1"/>
+    <neighbor left="crew" right="3_border 1"/>
+    <neighbor left="crew" right="border_inner"/>
+    <neighbor left="crew" right="border_inner 3"/>
+    <neighbor left="crew" right="1_border_corner 1" />
+    <neighbor left="crew" right="1_border_cornerF 1" />
+    <neighbor left="crew" right="1_border_t 1" />
+    <neighbor left="crew" right="1_border_junction 1" />
+    <neighbor left="crew" right="3_border_corner 1" />
+    <neighbor left="crew" right="3_border_cornerF 1" />
+    <neighbor left="crew" right="3_border_t 1" />
+    <neighbor left="crew" right="3_border_junction 1" />
+
+    <neighbor left="disp" right="disp"/>
+    <neighbor left="disp" right="border 1"/>
+    <neighbor left="disp" right="1_border 1"/>
+    <neighbor left="disp" right="3_border 1"/>
+    <neighbor left="disp" right="border_inner"/>
+    <neighbor left="disp" right="border_inner 3"/>
+    <neighbor left="disp" right="1_border_corner 1" />
+    <neighbor left="disp" right="1_border_cornerF 1" />
+    <neighbor left="disp" right="1_border_t 1" />
+    <neighbor left="disp" right="1_border_junction 1" />
+    <neighbor left="disp" right="3_border_corner 1" />
+    <neighbor left="disp" right="3_border_cornerF 1" />
+    <neighbor left="disp" right="3_border_t 1" />
+    <neighbor left="disp" right="3_border_junction 1" />
+
+    <neighbor left="eng" right="eng"/>
+    <neighbor left="eng" right="border 1"/>
+    <neighbor left="eng" right="1_border 1"/>
+    <neighbor left="eng" right="3_border 1"/>
+    <neighbor left="eng" right="border_inner"/>
+    <neighbor left="eng" right="border_inner 3"/>
+    <neighbor left="eng" right="1_border_corner 1" />
+    <neighbor left="eng" right="1_border_cornerF 1" />
+    <neighbor left="eng" right="1_border_t 1" />
+    <neighbor left="eng" right="1_border_junction 1" />
+    <neighbor left="eng" right="3_border_corner 1" />
+    <neighbor left="eng" right="3_border_cornerF 1" />
+    <neighbor left="eng" right="3_border_t 1" />
+    <neighbor left="eng" right="3_border_junction 1" />
+
+    <neighbor left="med" right="med"/>
+    <neighbor left="med" right="border 1"/>
+    <neighbor left="med" right="1_border 1"/>
+    <neighbor left="med" right="3_border 1"/>
+    <neighbor left="med" right="border_inner"/>
+    <neighbor left="med" right="border_inner 3"/>
+    <neighbor left="med" right="1_border_corner 1" />
+    <neighbor left="med" right="1_border_cornerF 1" />
+    <neighbor left="med" right="1_border_t 1" />
+    <neighbor left="med" right="1_border_junction 1" />
+    <neighbor left="med" right="3_border_corner 1" />
+    <neighbor left="med" right="3_border_cornerF 1" />
+    <neighbor left="med" right="3_border_t 1" />
+    <neighbor left="med" right="3_border_junction 1" />    
+
+    <neighbor left="misc" right="misc"/>
+    <neighbor left="misc" right="border 1"/>
+    <neighbor left="misc" right="1_border 1"/>
+    <neighbor left="misc" right="3_border 1"/>
+    <neighbor left="misc" right="border_inner"/>
+    <neighbor left="misc" right="border_inner 3"/>
+    <neighbor left="misc" right="1_border_corner 1" />
+    <neighbor left="misc" right="1_border_cornerF 1" />
+    <neighbor left="misc" right="1_border_t 1" />
+    <neighbor left="misc" right="1_border_junction 1" />
+    <neighbor left="misc" right="3_border_corner 1" />
+    <neighbor left="misc" right="3_border_cornerF 1" />
+    <neighbor left="misc" right="3_border_t 1" />
+    <neighbor left="misc" right="3_border_junction 1" />
+
+    <neighbor left="shuttle" right="shuttle"/>
+    <neighbor left="shuttle" right="border 1"/>
+    <neighbor left="shuttle" right="1_border 1"/>
+    <neighbor left="shuttle" right="3_border 1"/>
+    <neighbor left="shuttle" right="border_inner"/>
+    <neighbor left="shuttle" right="border_inner 3"/>
+    <neighbor left="shuttle" right="1_border_corner 1" />
+    <neighbor left="shuttle" right="1_border_cornerF 1" />
+    <neighbor left="shuttle" right="1_border_t 1" />
+    <neighbor left="shuttle" right="1_border_junction 1" />
+    <neighbor left="shuttle" right="3_border_corner 1" />
+    <neighbor left="shuttle" right="3_border_cornerF 1" />
+    <neighbor left="shuttle" right="3_border_t 1" />
+    <neighbor left="shuttle" right="3_border_junction 1" />
+
+    <neighbor left="stor" right="stor"/>
+    <neighbor left="stor" right="border 1"/>
+    <neighbor left="stor" right="1_border 1"/>
+    <neighbor left="stor" right="3_border 1"/>
+    <neighbor left="stor" right="border_inner"/>
+    <neighbor left="stor" right="border_inner 3"/>
+    <neighbor left="stor" right="1_border_corner 1" />
+    <neighbor left="stor" right="1_border_cornerF 1" />
+    <neighbor left="stor" right="1_border_t 1" />
+    <neighbor left="stor" right="1_border_junction 1" />
+    <neighbor left="stor" right="3_border_corner 1" />
+    <neighbor left="stor" right="3_border_cornerF 1" />
+    <neighbor left="stor" right="3_border_t 1" />
+    <neighbor left="stor" right="3_border_junction 1" />
 
 
     
