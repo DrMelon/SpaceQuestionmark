@@ -1,7 +1,3 @@
-# Symmetry Generator
-# xyz is sec, atmos etc
-## name:connect_type:up:down:left:right
-space:X:a:a:a:a
-xyz:X:xyz:xyz:xyz:xyz
-border:T:xyz:space:border:border
-1_straight:I:1_straight:1_straight:
+SYMMETRY GENERATOR:
+
+Need a program to place tiles & their neighbours, export strings for use in map gen
