@@ -30,8 +30,6 @@ namespace SpaceQuestionmark
             WALL
         }
 
-
-
         public static ColliderTags GetColliderTagForType<T>()
         {
             if(typeof(T) == typeof(Entities.Floor))
