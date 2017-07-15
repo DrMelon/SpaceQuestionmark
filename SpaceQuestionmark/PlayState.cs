@@ -271,6 +271,16 @@ namespace SpaceQuestionmark
             {
                 Global.debugMode = true;
             }
+
+            if(Input.KeyPressed(Key.Home))
+            {
+                CameraZoom *= 0.95f;
+            }
+            if(Input.KeyPressed(Key.End))
+            {
+                CameraZoom *= 1.05f;
+            }
+
         }
 
         public override void Render()
@@ -281,6 +291,9 @@ namespace SpaceQuestionmark
             if (Global.debugMode)
             {
                 Draw.Circle(thePlayer.X, thePlayer.Y, 8, Color.None, Color.Custom("FaintRed"), 1);
+
+                Draw.Text(map.GetZoneAtPixCoords((int)thePlayer.X, (int)thePlayer.Y).ToString(), 16, thePlayer.X, thePlayer.Y + 17);
+
             }
         }
 

@@ -16,10 +16,91 @@ using Otter;
 
 namespace SpaceQuestionmark.Entities
 {
+    public enum Zone
+    {
+        SPACE,
+        ACCESS,
+        CREW,
+        MEDICAL,
+        SCIENCE,
+        ENGINEERING,
+        ATMOSPHERICS,
+        STORAGE,
+        LOGISTICS,
+        COMMS,
+        SECURITY,
+        SHUTTLEPORT,
+        BOTANY,
+
+        COUNT
+    }
+
     public struct Room
     {
         public int x, y, w, h;
+        public Zone zone;
     }
+
+    public class BSPLeaf
+    {
+        public const int MinLeafSize = 14;
+        public int x, y, w, h;
+        public BSPLeaf lChild = null;
+        public BSPLeaf rChild = null;
+
+        public bool Split()
+        {
+            if(lChild != null || rChild != null)
+            {
+                return false;
+            }
+
+            // Initial split will be random
+            bool splitH = Otter.Rand.Bool;
+
+            // Split based on roomsize
+            if(w > h && (float)w / (float)h >= 1.25)
+            {
+                splitH = false;
+            }
+            else if(h > w && (float)h / (float)w >= 1.25)
+            {
+                splitH = true;
+            }
+
+            // check min size
+            int maxSize = (splitH ? h : w) - MinLeafSize;
+
+            if(maxSize <= MinLeafSize)
+            {
+                return false;
+            }
+
+            // find point along axis to split
+            int splitPoint = Otter.Rand.Int(MinLeafSize, maxSize);
+
+            // do split
+            if(splitH)
+            {
+                lChild = new BSPLeaf() { x=x, y=y, w=w, h=splitPoint };
+                rChild = new BSPLeaf() { x = x, y = y+splitPoint, w = w, h = h-splitPoint };
+            }
+            else
+            {
+                lChild = new BSPLeaf() { x = x, y = y, w = splitPoint, h = h };
+                rChild = new BSPLeaf() { x = x + splitPoint, y = y, w = w - splitPoint, h = h };
+            }
+
+            return true;
+
+        }
+
+
+    }
+
+
+
+
 
     public class Floor : EntityEx
     {
@@ -33,6 +114,7 @@ namespace SpaceQuestionmark.Entities
         GridCollider floorCol;
         Tilemap wallMap;
         GridCollider wallCol;
+        public List<Room> roomsMade = new List<Room>();
 
         public Systems.Atmospherics.GasManager myGasManager = new Systems.Atmospherics.GasManager();
 
@@ -60,9 +142,118 @@ namespace SpaceQuestionmark.Entities
 
         public void GenerateMap()
         {
+
+            // New, BSP-style zone stuff!
+
+            // first things first, let's organize the outer zones.
+            
+
+            // the whole map size is 256*256, so let's border 64 tiles off each size as space.
+            roomsMade.Add(new Room() { x = 0, y = 0, w = 256, h = 64, zone = Zone.SPACE } );
+            roomsMade.Add(new Room() { x = 256 - 64, y = 0, w = 64, h = 256, zone = Zone.SPACE });
+            roomsMade.Add(new Room() { x = 0, y = 256 - 64, w = 256, h = 64, zone = Zone.SPACE });
+            roomsMade.Add(new Room() { x = 0, y = 0, w = 64, h = 256, zone = Zone.SPACE });
+
+            // let's make a list of necessary rooms for a station to work
+            List<Zone> requiredZones = new List<Entities.Zone>(){ Zone.ENGINEERING, Zone.SHUTTLEPORT, Zone.ATMOSPHERICS };
+
+
+            // now let's recursively split the remaining space up
+            BSPLeaf startLeaf = new BSPLeaf() { x = 65, y = 65, w = 256-65, h = 265-65 };
+
+            List<BSPLeaf> leaves = new List<BSPLeaf>();
+            leaves.Add(startLeaf);
+
+            bool splitCorrectly = true;
+
+            while(splitCorrectly)
+            {
+                splitCorrectly = false;
+                List<BSPLeaf> newleaves = new List<BSPLeaf>();
+                foreach(BSPLeaf leaf in leaves)
+                {
+                    if(leaf.Split())
+                    {
+                        newleaves.Add(leaf.lChild);
+                        newleaves.Add(leaf.rChild);
+                        splitCorrectly = true;
+                    }
+                }
+                leaves.Add(newleaves.ToArray());
+            }
+
+            // now only get the lowest-layer of leaves
+            leaves.RemoveAll(leaf => (leaf.lChild != null || leaf.rChild != null));
+
+            // trim out based on radial selection?
+            leaves.RemoveAll(leaf => (Math.Abs((128 - leaf.x)) * Math.Abs((128 - leaf.x)) + Math.Abs((128 - leaf.y)) * Math.Abs((128 - leaf.y))) > 100*100);
+
+            // now we got leaves!! assign them zones, making sure the required zones get in.
+            if (leaves.Count < requiredZones.Count)
+            {
+                Util.Log("UH OH!!!!");
+            }
+
+            
+
+            foreach(Zone reqZone in requiredZones)
+            {
+                // pick a random leaf from the leaves and pop it
+                BSPLeaf leafPick = leaves.ElementAt(Otter.Rand.Int(0, leaves.Count));
+
+                leaves.Remove(leafPick);
+
+                roomsMade.Add(new Entities.Room() { x = leafPick.x, y = leafPick.y, w = leafPick.w, h = leafPick.h, zone = reqZone });
+            }
+
+            // Now do the same for remaining leaves but with random zones
+            foreach(BSPLeaf leaf in leaves)
+            {
+                roomsMade.Add(new Entities.Room() { x = leaf.x, y = leaf.y, w = leaf.w, h = leaf.h, zone = (Zone)Otter.Rand.Int(0, (int)Zone.COUNT) });
+            }
+
+
+            // Whew!! now we have rooms made from zones.
+
+            // Next step is to physically fill out each room with sub-rooms based on the zone type.
+            foreach(Room room in roomsMade)
+            {
+                MakePhysicalRoom(room);
+            }
+
+            // Then we do adjacency, airlocks, doors.
+
+            // Then we do major devices for the sub-rooms.
+
+            // Then we do wiring, lights, atmospherics, logistics, comms connections.
+
+            // Then we place items in each sub-room based on the zone/sub-room .
+
+            // Then we place mobs!
+
+            // Then we place the player (todo: safely)
+            while(GetZoneAtPixCoords(playerStartX*64, playerStartY*64) == Zone.SPACE || !IsFloorAt(playerStartX,playerStartY))
+            {
+                playerStartX = Rand.Int(64, 256-64);
+                playerStartY = Rand.Int(64, 256-64);
+            }
+            
+           
+
+            // And finally, we kickstart atmos
+            FindSpaceTiles();
+
+            myGasManager.NeedToRecalculateNeighbours = true;
+
+            // OLD
+
+
+
             // Map
             // wave-function gen
-            Generate.DoTheDance();
+            //Generate.DoTheDance();
+
+            /*
 
             // A WHAM BAM BOODLY TIME TO MAKE A SPACE SHIBOODLY
             List<Room> roomsMade = new List<Room>();
@@ -148,14 +339,33 @@ namespace SpaceQuestionmark.Entities
             FindSpaceTiles();
 
             myGasManager.NeedToRecalculateNeighbours = true;
+
+        */
         }
 
 
-        public void MakeRoom(int cx, int cy, int w, int h, int floortile)
+        public void MakePhysicalRoom(int cx, int cy, int w, int h, int floortile)
         {
             FloorFillRect(cx - w / 2, cy - h / 2, w, h, floortile, true);
             FloorLineRect(cx - w / 2, cy - h / 2, w, h, 1, true);
             WallLineRect(cx - w / 2, cy - h / 2, w, h, 1);
+        }
+
+        public void MakePhysicalRoom(Room room)
+        {
+            switch (room.zone)
+            {
+                case Zone.SPACE:
+                    break;
+
+                default:
+                    FloorFillRect(room.x+2, room.y+2, room.w-4, room.h-4, 2, true);
+                    FloorLineRect(room.x+2, room.y+2, room.w-4, room.h-4, 1, true);
+                    WallLineRect(room.x+2, room.y+2, room.w-4, room.h-4, 1);
+                    break;
+            }
+
+            
         }
 
         public bool CheckSpaceForRoom(int cx, int cy, int w, int h)
@@ -329,6 +539,29 @@ namespace SpaceQuestionmark.Entities
             myGasManager.Update(Systems.Time.GetDeltaTime(Systems.Time.TimeGroup.WORLDTHINK));
         }
 
+        public Zone GetZoneAtPixCoords(int x, int y)
+        {
+            int tileX = x / 64;
+            int tileY = y / 64;
+
+            Room checkRoom = roomsMade[0];
+            int roomsMadeIdx = 0;
+
+            while((tileX < checkRoom.x || tileY < checkRoom.y) || (tileX > checkRoom.x + checkRoom.w || tileY > checkRoom.y + checkRoom.h))
+            {
+                roomsMadeIdx++;
+
+                if(roomsMadeIdx == roomsMade.Count)
+                {
+                    return Zone.SPACE;
+                }
+
+                checkRoom = roomsMade[roomsMadeIdx];
+            }
+
+            return checkRoom.zone;
+        }
+
         public override void Render()
         {
             base.Render();
@@ -336,6 +569,85 @@ namespace SpaceQuestionmark.Entities
             if(Global.debugMode)
             {
                 myGasManager.DebugDraw();
+
+                foreach(Room room in roomsMade)
+                {
+                    Color roomCol = Color.White;
+
+                    switch (room.zone)
+                    {
+                        case Zone.ACCESS:
+                            roomCol.R = 0.5f;
+                            roomCol.G = 0.5f;
+                            roomCol.B = 0.5f;
+                            break;
+
+                        case Zone.ATMOSPHERICS:
+                            roomCol.R = 0.6f;
+                            roomCol.G = 0.95f;
+                            roomCol.B = 1.0f;
+                            break;
+
+                        case Zone.MEDICAL:
+                            roomCol.R = 1.0f;
+                            roomCol.G = 0.96f;
+                            roomCol.B = 1.0f;
+                            break;
+
+                        case Zone.SHUTTLEPORT:
+                            roomCol.R = 0.8f;
+                            roomCol.G = 0.5f;
+                            roomCol.B = 0.8f;
+                            break;
+
+                        case Zone.ENGINEERING:
+                            roomCol.R = 1.0f;
+                            roomCol.G = 0.85f;
+                            roomCol.B = 0.0f;
+                            break;
+
+                        case Zone.STORAGE:
+                            roomCol.R = 0.5f;
+                            roomCol.G = 0.8f;
+                            roomCol.B = 0.5f;
+                            break;
+
+                        case Zone.LOGISTICS:
+                            roomCol.R = 0.8f;
+                            roomCol.G = 0.5f;
+                            roomCol.B = 0.5f;
+                            break;
+
+                        case Zone.BOTANY:
+                            roomCol.R = 0.65f;
+                            roomCol.G = 0.8f;
+                            roomCol.B = 0.5f;
+                            break;
+
+                        case Zone.COMMS:
+                            roomCol.R = 0.5f;
+                            roomCol.G = 0.5f;
+                            roomCol.B = 0.5f;
+                            break;
+
+                        default:
+                            roomCol.R = 0.5f;
+                            roomCol.G = 0.5f;
+                            roomCol.B = 0.5f;
+                            break;
+                    }
+
+
+
+                    roomCol.A = 0.5f;
+
+                    if (room.zone != Zone.SPACE)
+                    {
+                        Draw.Rectangle(room.x * FLOOR_TILE_SIZE, room.y * FLOOR_TILE_SIZE, room.w * FLOOR_TILE_SIZE, room.h * FLOOR_TILE_SIZE, roomCol, roomCol * Color.Grey, 2);
+                    }
+                }
+
+                Draw.Circle(128 * 64, 128 * 64, 100 * 64, Color.None ,Color.Cyan, 16);
             }
         }
 
